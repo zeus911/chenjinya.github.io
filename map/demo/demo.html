@@ -1,0 +1,101 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>网友林飞分享jquery绘制中国地图插件</title>
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="raphael.js"></script>
+    <script src="chinamapPath.js"></script>
+    <script src="chinamap.js"></script>
+    <style type="text/css">
+        #ChinaMap {
+            padding-right: 100px;
+            padding-left: 10px;
+            padding-bottom: 10px;
+            margin: 0px auto;
+            /*width: 100%;*/
+            padding-top: 10px;
+            position: relative;
+            text-align: center;
+        }
+
+        #tiplayer {
+            padding-right: 5px;
+            padding-left: 5px;
+            z-index: 1000;
+            min-height: 1em;
+            background: #000;
+            max-width: 250px;
+            padding-bottom: 5px;
+            font: 12px 'Microsoft YaHei',Arial,宋体,Tahoma,Sans-Serif;
+            color: #fff;
+            padding-top: 5px;
+            position: absolute;
+            text-align: left;
+            word-wrap: break-word;
+            -moz-border-radius: 3px;
+            -khtml-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+        }
+
+        .ToolTip {
+            padding-right: 5px;
+            padding-left: 5px;
+            z-index: 1000;
+            min-height: 1em;
+            background: #000;
+            max-width: 350px;
+            padding-bottom: 5px;
+            font: 12px 'Microsoft YaHei',Arial,宋体,Tahoma,Sans-Serif;
+            color: #fff;
+            padding-top: 5px;
+            position: absolute;
+            text-align: left;
+            word-wrap: break-word;
+            -moz-border-radius: 3px;
+            -khtml-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+        }
+
+        .ToolTip {
+            border-right: #c5b270 1px solid;
+            padding-right: 15px;
+            border-top: #c5b270 1px solid;
+            padding-left: 15px;
+            background: #fffbd6;
+            padding-bottom: 0px;
+            border-left: #c5b270 1px solid;
+            color: #bb861c;
+            line-height: 30px;
+            padding-top: 0px;
+            border-bottom: #c5b270 1px solid;
+            top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="ChinaMap">
+        <div id="map"></div>
+        <div id="ToolTip" class="ToolTip" style="left: 10px">
+            <div id="areaInfo"></div>
+            <div id="cityInfo"></div>
+        </div>
+        <div class="ToolTip" style="right: 50px;">
+            <div id="topList" style="width: 130px; float: left">
+            </div>
+            <div id="cityList" style="display: none; float: left">
+            </div>
+        </div>
+    </div>
+	<center>
+    <div style="font-size:15px; font-weight:bold; text-align:center; line-height:25px; clear:both; position:relative; z-index:1;">网友林飞分享jquery绘制中国地图插件<br />
+      JquerySchool网站出品（<a href="http://www.jq-school.com" target="_blank" style="color:#000">http://www.jq-school.com</a>）	
+	  <br />
+	   网友林飞个人网站（<a href="http://www.5imvc.com/" target="_blank" style="color:#000">http://www.5imvc.com/</a>）	
+	  <br />
+      官方网站学习交流QQ群<a target="_blank" href="http://wp.qq.com/wpa/qunwpa?idkey=47d9817e9e09f61b288b8ad6d33fb18cbd659ca6773f663918d6e5d3a2981a12"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Jquery学堂③群" title="Jquery学堂③群"></a> </div>
+  </center>
+
+</body>
+</html>
