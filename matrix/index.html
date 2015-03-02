@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+	<title>Matrix</title>
+    <style type="text/css">
+     body{padding:0; margin:0;}
+    </style>
+
+</head>
+<body>
+
+	<canvas id="Matrix"></canvas>
+    
+
+    <script>
+    /*
+        author : Jinya (jinyachen@gmail.com)
+        Baidu.com
+        github: github.com/chenjinya
+    */
+    window.requestAnimationFrame = (function(){
+        return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          window.oRequestAnimationFrame      ||
+          window.msRequestAnimationFrame     ||
+          function(/* function */ callback, /* DOMElement */ element){
+          window.setTimeout(callback, 1000 / 60);
+        };
+      })();
+      
+    var Matrix = function(){
+        this.init();
+    }
+    Matrix.prototype={
+        init:function(){
+            this.canvas = document.getElementById("Matrix");
+            this.windowHeight = document.documentElement.clientHeight; 
+            this.windowWidth = window.screen.width;
+            this.canvas.width = this.windowWidth;
+            this.canvas.height = this.windowHeight;
+            this.fontHeight=20;
+            this.fontWidth=50;
+            this.fontSize=14;
+            this.fadeLevel = 20;
+            this.showLevel = 500;
+            this.colLength = 20; //base
+            this.colCount = 500;//base
+            this.colDelay = 100; //base
+            this.colHeadEnter= 0; 
+            this.flashSpeed=4;
+            this.flashSpeedIndex=0;
+            this.stop = false;
+            this.words=[]
+
+            
+            this.map=[];
+            this.ctx = this.canvas.getContext("2d");
+            this.initWords();
+            this.initMap();
+            this.initBackground();
+            this.animate();
+            this.bindEvent();
+        },
+        initBackground:function(){
+            var ctx = this.ctx;
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, this.windowWidth, this.windowHeight );
+        },
+        initMap:function(){
+            this.map=[];
+            for(var colIndex =0; colIndex <this.colCount ; colIndex ++){
+                var self =this;
+                this.map.push(this.initMapCol());
+            }
+        },
+        initWords :function(){
+            //定制字符
+            this.words =[1,2,3,4,5,6,7,8,9,0,"a","b","c","d","e","f","g","H","i","j"
+
+            ];
+            for(var i=0; i<10; i++){
+                this.words.push(String.fromCharCode("23"+Math.floor(Math.random()*555)));
+                //this.words.push(String.fromCharCode(24593));
+            }
+        },
+        initMapCol:function(){
+            
+            var col = {
+                    left:Math.random()*this.windowWidth,
+                    top:Math.random()*this.windowHeight-100,
+                    height:0,
+                    delay:Math.random()*this.colDelay,
+                    index:0,
+                    fontSize:Math.random()*this.fontSize,
+                    list:[]
+                };
+            var self = this;
+            for(var i =0; i<this.colLength ; i++){
+                    col.list.push({
+                        g:255- this.colHeadEnter,
+                        b:0,
+                        r:0,
+                        //word:1,
+                        d:1,
+                        top:self.fontHeight*(i+1)
+                    });
+                };
+            return col;
+        },
+        bindEvent:function(){
+            var self = this;
+            document.addEventListener("keypress",function(e){
+                console.log(e)
+                if(e.charCode == 32 || e.charCode == 13){
+                    self.stop = !self.stop;
+                    !self.stop && self.animate();
+                }else{
+                    var c = String.fromCharCode(e.charCode);
+                    if(self.words.indexOf(c) < 0)
+                        self.words.push(String.fromCharCode(e.charCode))
+                }
+            })
+        },
+        
+        build:function(){
+            var ctx= this.ctx;
+           // 设置字体
+            ctx.font =this.fontSize+"px Arail"; 
+            // 设置对齐方式
+            ctx.textAlign = "center";
+            // 设置填充颜色
+            var i=0;
+            var fadeLevel = this.fadeLevel;
+
+            for(  i in this.map){
+                var col = this.map[i];
+               // fadeLevel = Math.floor(255/col['list'].length)
+                
+                var x = col.left;
+                var y = col.top;
+
+                 if(col['list'].length ==0){
+                     this.map[i] =  this.initMapCol();
+                     continue;
+
+                 }
+                 //延迟
+                 if(col.delay >0){
+                    col.delay--;
+                    continue;
+                 }
+                if(col.index >=col['list'].length ){
+                   
+
+                }else{
+                    //下一个字符
+                    col.index++;
+                }
+                //遍历字符
+                for( var k in col['list']){
+                    //头部停止
+                    if (k >col.index){
+                        break;
+                    }
+                    var w = col['list'][k];
+                    if(w.d == 1 ){
+                        if(w.g >=255){
+                            w.d=0;
+                            w.g ==255
+                            //continue;
+                        }
+                         w.g += fadeLevel;
+                         if(w.g >=255){
+                            w.g = 255;
+                        }
+                    }else{
+                        if(w.g <=0){
+                           col['list'].shift();
+                          // w.d=1;
+                            continue;
+                        }
+                        w.g -= fadeLevel;
+                    }
+                    //控制颜色
+                    ctx.fillStyle = "rgb(0,"+w.g+",0)"; 
+                    if(this.words.length >0){
+                        ctx.fillText(this.words[Math.floor(Math.random()*this.words.length)], x, w.top+y);
+                    }
+                    
+                }
+            }
+        },
+         
+        clearCanvas:function(canvas){
+                this.initBackground();
+        },
+        
+        animate:function(){
+            if(this.stop){
+                return;
+            }
+            this.flashSpeedIndex++
+            if(this.flashSpeedIndex < this.flashSpeed){
+                
+            }else{
+                this.flashSpeedIndex = 0;
+                this.clearCanvas([this.canvas]);
+                this.build();
+            }
+            var self = this;
+            requestAnimationFrame(function(){ self.animate() });
+        }
+
+    }
+    window.m=new Matrix();
+     
+    </script>
+</body>
+</html>
