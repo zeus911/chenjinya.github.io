@@ -51,7 +51,10 @@ $(document).ready(function(){
 	var countTimeout = null;
 	var start = false;
 	var Counting = function(){
-		if( !start ) return;
+		if( !start ) {
+			clearTimeout(countTimeout) ;
+			return;
+		}
 		countTimeout = setTimeout(function(){
 			count++;
 			$counter.html(count);
