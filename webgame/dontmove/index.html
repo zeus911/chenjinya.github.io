@@ -63,28 +63,36 @@ $(document).ready(function(){
 		},1000);
 	};
 	var Ending = function(){
-		
+		//setTimeout(function(){
+			touching = false;
+			start = false;
+		//}
 		clearTimeout(countTimeout);
-		alert("游戏结束，你坚持了"+count+"秒！");
-		$counter.html("点击圆圈重新开始");
-		touching = false;
-		start = false;
+		
 		$("title").html("Don't Move , 我只坚持了"+count+"秒");
 		
-		count = 0;
+		$counter.html("游戏结束，你坚持了"+count+"秒！<br/><br/>"+"点击圆圈重新开始");
+		
 		
 		$(".footer").show();
 	}
-	$root.on("touchstart",".toucher",function(){
-		if(touching) return;
+	$root.on("touchstart",".toucher",function(e){
+		if(touching) {
+			//Ending()
+			return;
+		}
+		console.log(e)
 		touching = true;
 		start = true;
+		count = 0;
 		$counter.html(count);
 		Counting();
-	}).on("touchmove",".toucher",function(){
+	}).on("touchmove",".toucher",function(e){
 		Ending();
-	}).on("touchend",".toucher",function(){
+	}).on("touchend",".toucher",function(e){
 		Ending();
+		//$(".footer").html('end')
+
 	})
 
 });
