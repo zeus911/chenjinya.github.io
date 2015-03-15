@@ -468,7 +468,7 @@
         },
         initEnv:function(){
             this.startFlag = true;
-            this.runTime= 1;
+            this.runTime= 60;
             this.scores = 0;
             this.process={};
             this.process.index = true;
