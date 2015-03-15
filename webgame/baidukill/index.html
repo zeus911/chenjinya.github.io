@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, 
+            initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, 
+            user-scalable=no">
+<title>百度杀毒4.0</title>
+<link href="favicon.ico" rel="icon" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<style type="text/css">
+body{background:#e0b13b}
+.loading{ position:absolute;color: #FFF}
+#gameCanvas{}
+#share{
+	background: rgba(0,0,0,0.7);
+	position: absolute;
+	display: none;
+}
+#share img{width:100%; }
+</style>
+ <script src="js/zepto.min.js"></script>
+  <script src="js/loading.js"></script>
+
+</head>
+<body scoll=no  onselectstart="return false;" style="-moz-user-select:none; user-select:none; -webkit-user-select:none;" >
+	<div id="container">
+		<div class="loading" >
+
+
+		</div>
+        
+
+		<canvas id="gameCanvas" class="game_stage">
+
+		</canvas>
+        <div id="share">
+        	<img src="img/share.png">
+        </div>
+	</div>
+
+	<script type="text/javascript" src="js/weixin.js"></script>
+	<script type="text/javascript" src="js/run.js"></script>
+<div style="display:none;"><script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fec68d4c362b675727eaae04e579ced28' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>
+</html>
