@@ -3,8 +3,9 @@
     document.addEventListener("touchmove",function(e){
         e.preventDefault();  
     });
-    document.addEventListener("dbclick",function(e){
-        e.preventDefault();  
+    document.addEventListener("click",function(e){
+        e.preventDefault(); 
+        
     });
     window.requestAnimationFrame = (function(){
         return  window.requestAnimationFrame       ||
@@ -125,6 +126,7 @@
                    
                 }
             }else if(e.type == "touchstart" ){
+                return;
                 target = e.touches[0];
                 relativePos = this.getPosition(target.pageX,target.pageY);
                 if(self.heads){
@@ -208,7 +210,7 @@
                 
                 self.initData();
                 
-                self.start();
+               self.start();
                
                 
 
@@ -298,7 +300,7 @@
                 {x:Math.random()*400,y:100},
                 {x:Math.random()*400,y:100},
             ];
-            var speedBase = 2;
+            var speedBase = 4;
             var speedScal = 2;
             var heads=[
                 { name:"绵羊", obj: self.resources["sheep1"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
@@ -313,7 +315,6 @@
                 { name:"王祖蓝",  obj: self.resources["wangzulan"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
                 { name:"杨臣刚",  obj: self.resources["yangchengang"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
                 { name:"张默",  obj: self.resources["zhangmo"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-
             ];
 
             var exist = [];
@@ -344,9 +345,13 @@
 
             },this,resolution];
         },
+        mutiLineText:function(text,ctx){
+
+        },
         drawResult:function(num){
             num = this.scores;
             var self = this,text,index,content;
+            //num = 220
             if(num < 100){
                 index = 1;
                 text = "成绩偏差，"+num+"分";
@@ -363,6 +368,28 @@
                 content="如此快速精准的从千万只喜羊羊中找出1只草泥马幼崽这种事显然只有目光如炬、天赋“慧眼”的你才能办得到嘛！得了"+num+"分的好成绩、骚年要不要考虑分享抽个奖？"
 
             }
+            var autoBreakLine = function(text,x,y,lineWidth,wordWidth,lineHeight,ctx,conf){
+                 var wordWidth = 20;
+                var lineWidth = 300;
+                var tmpText = "";
+                var cutLength = Math.floor(lineWidth/wordWidth);
+                var length = text.length;
+                var _length = 0;
+                var _height = y;
+                ctx.textAlign="center";
+                ctx.font="36px Yahei";
+                while(1){
+                    tmpText = text.substr(_length,cutLength);
+                    _length+=cutLength;
+                    self.ctx.fillText(tmpText,x,_height);
+                    _height+=lineHeight;
+                    console.log(tmpText)
+                    if(_length > length){
+                        break;
+                    }
+                }
+                
+            }
             this.inject["result"+index] = [function(self){
                 var image = self.resources["result"+index].img;
                 self.ctx.drawImage(image,0,0,image.width,image.height);
@@ -370,8 +397,11 @@
                 self.ctx.textAlign="center";
                 self.ctx.width= "300px";
                 self.ctx.font="40px Yahei";
-                self.ctx.fillText(text,self.canvasWidth/2,self.getPosition(0,250)[1]);
-               // self.ctx.fillText(content,self.canvasWidth/2,self.getPosition(0,304)[1],250);
+                self.ctx.fillText(text,self.canvasWidth/2,self.getPosition(0,260)[1]);
+
+                autoBreakLine(content,self.canvasWidth/2,self.getPosition(0,330)[1],300,40,40,self.ctx);
+            
+                
 
                 self.ctx.fillStyle="#e0b13b";
                 self.ctx.fillRect(0,image.height,self.canvasHeight,self.canvasWidth);
@@ -435,6 +465,7 @@
         start:function(){
             var self = this;
             this.drawIndex();
+            //self.drawResult();
             this.initEnv();
             this.animate();
            
@@ -468,7 +499,7 @@
         },
         initEnv:function(){
             this.startFlag = true;
-            this.runTime= 60;
+            this.runTime= this.timeLimit;
             this.scores = 0;
             this.process={};
             this.process.index = true;
