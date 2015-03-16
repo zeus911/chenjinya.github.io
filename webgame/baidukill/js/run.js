@@ -232,7 +232,7 @@
             var self = this;
             var resolutionLoc = this.getPosition(30,353);
             var resolutionx = Math.random()*(this.windowWidth - resolutionLoc[0]);
-            var resolutionSize = this.getPosition(153,70);
+            var resolutionSize = this.getPosition(153,50);
             var resolutiony = Math.random()*(this.windowHeight - resolutionSize[1])
             this.inject["duang"] = [function(self){
                 var image = self.resources["fail"].image;
