@@ -141,6 +141,8 @@
                                 self.drawBoom(item.position[0]-diff,item.position[1]-diff);
                                item.position = self.headPosition();
                                self.scores+=10;
+                            }else{
+                                self.drawDuang();
                             }
                             console.log("touch:",item.name)
                         }
@@ -224,15 +226,38 @@
             
             
         },
+        drawDuang:function(x,y){
+            var self = this;
+            var resolutionLoc = this.getPosition(30,353);
+            var resolutionx = Math.random()*(this.windowWidth - resolutionLoc[0]);
+            var resolutionSize = this.getPosition(153,70);
+            var resolutiony = Math.random()*(this.windowHeight - resolutionSize[1])
+            this.inject["duang"] = [function(self){
+                var image = self.resources["fail"].image;
+                self.ctx.drawImage(image,resolutionx,resolutiony,resolutionSize[0],resolutionSize[1]);
+               
+            },this];
+            if(this.duangTimeout){
+                clearTimeout(this.duangTimeout);
+            }
+            this.duangTimeout = setTimeout(function(){
+                delete self.inject["duang"]
+            },1000)
+        },
         drawBoom:function(x,y){
             var self = this;
             var resolution = this.getPosition(153)[0];
+             delete self.inject["duang"];
+
             this.inject["boom"] = [function(self){
                 var image = self.resources["boom"].image;
                 self.ctx.drawImage(image,x,y,resolution,resolution);
                
             },this];
-            setTimeout(function(){
+             if(this.boomTimeout){
+                clearTimeout(this.duangTimeout);
+            }
+            this.boomTimeout = setTimeout(function(){
                 delete self.inject["boom"]
 
             },1000)
@@ -366,6 +391,7 @@
                 content="如此快速精准的从千万只喜羊羊中找出1只草泥马幼崽这种事显然只有目光如炬、天赋“慧眼”的你才能办得到嘛！得了"+num+"分的好成绩、骚年要不要考虑分享抽个奖？"
 
             }
+            $("title").html(content);
             var autoBreakLine = function(text,x,y,lineWidth,wordWidth,lineHeight,ctx,conf){
                  var wordWidth = 20;
                 var lineWidth = 300;
@@ -463,6 +489,7 @@
         start:function(){
             var self = this;
             this.drawIndex();
+           // self.drawDuang();
             //self.drawResult();
             this.initEnv();
             this.animate();
