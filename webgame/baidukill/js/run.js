@@ -3,9 +3,8 @@
     document.addEventListener("touchmove",function(e){
         e.preventDefault();  
     });
-    document.addEventListener("click",function(e){
-        e.preventDefault(); 
-        
+    document.addEventListener("dbclick",function(e){
+        e.preventDefault();  
     });
     window.requestAnimationFrame = (function(){
         return  window.requestAnimationFrame       ||
@@ -126,7 +125,6 @@
                    
                 }
             }else if(e.type == "touchstart" ){
-                return;
                 target = e.touches[0];
                 relativePos = this.getPosition(target.pageX,target.pageY);
                 if(self.heads){
