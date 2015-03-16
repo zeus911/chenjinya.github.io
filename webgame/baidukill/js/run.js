@@ -94,7 +94,7 @@
                 relativePos = this.getWindowPosition(e.x,e.y);
                // console.log(relativePos)
                 if(relativePos[0] > this.getWindowPosition(111)[0]
-                    && relativePos[1] > this.getWindowPosition(0,494)[1]
+                    && relativePos[1] > this.getWindowPosition(0,470)[1]
                  && relativePos[0] < this.getWindowPosition(273)[0]
                  && relativePos[1] < this.getWindowPosition(0,555)[1]
                  && this.process.index == true
