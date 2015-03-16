@@ -141,8 +141,10 @@
                                 self.drawBoom(item.position[0]-diff,item.position[1]-diff);
                                item.position = self.headPosition();
                                self.scores+=10;
+                               $(".kill-sound")[0].play()
                             }else{
                                 self.drawDuang();
+                                $(".pi-sound")[0].play()
                             }
                             console.log("touch:",item.name)
                         }
@@ -549,7 +551,7 @@
             
         },
         animate:function(){
-            console.log(this.startFlag);
+            
             if(! this.startFlag) return;
             this.clearCanvas([this.canvas]);
             for (var i in this.inject ){
@@ -571,7 +573,7 @@
             setTimeout(function(){
                 console.log("FPS:"+FPS);
                 FPS =0;
-                showFPS();
+               // showFPS();
             },1000);
         }
     window.FPS = 0;
