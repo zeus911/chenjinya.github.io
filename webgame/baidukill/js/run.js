@@ -17,6 +17,8 @@
         };
       })();
     var DevelopDeviceResolution = [ 384,640];
+	var DeviceRa = 640/1008;
+	
     var Run = function(){
         this.constuctor();
     };
@@ -55,6 +57,7 @@
             this.windowWidth = $(window).width();
             this.windowHeight = $(window).height();
             this.canvasWidth = this.windowWidth*2;
+			this.canvasValidHeight = this.canvasWidth /DeviceRa;
             this.canvasHeight = this.windowHeight*2;
 
             $("#container").width(this.windowWidth);
@@ -86,19 +89,27 @@
 
         },
         processControl:function(e){
-            console.log(e)
+          //  console.log(e)
             var self = this,target,relativePos;
             
-            var length = this.getPosition(77)[0];
+            
             if(e.type == "click"){
-                relativePos = this.getWindowPosition(e.x,e.y);
-               // console.log(relativePos)
-                if(relativePos[0] > this.getWindowPosition(111)[0]
-                    && relativePos[1] > this.getWindowPosition(0,470)[1]
-                 && relativePos[0] < this.getWindowPosition(273)[0]
-                 && relativePos[1] < this.getWindowPosition(0,555)[1]
+                relativePos = this.getPosition(e.x,e.y);
+                //console.log("click relativePos",relativePos)
+				self.drawPoint(relativePos[0],relativePos[1]);
+              /*  if(relativePos[0] > this.getPosition(111)[0]
+                    && relativePos[1] > this.getPosition(0,470)[1]
+                 && relativePos[0] < this.getPosition(273)[0]
+                 && relativePos[1] < this.getPosition(0,555)[1]
                  && this.process.index == true
-                 ){
+                 ){*/
+				// console.log("mem",relativePos[0] , 972/1209*self.canvasValidHeight);
+				 if(relativePos[0] > 239/768*self.canvasWidth
+					&& relativePos[1] >  972/1209*self.canvasValidHeight
+				 && relativePos[0] < 536/768*self.canvasWidth
+				 && relativePos[1] < 1094/1209*self.canvasValidHeight
+				 && this.process.index == true
+				 ){
                     this.process.index= false;
                     delete this.inject["index"];
                     self.drawGame();
@@ -106,17 +117,17 @@
                     self.drawTime();
                     self.drawScore();
                     self.drawHead();
-                }else if( relativePos[0] > this.getWindowPosition(75)[0]
-                    && relativePos[1] > this.getWindowPosition(0,473)[1]
-                    && relativePos[0]  < this.getWindowPosition(315)[0]
-                    && relativePos[1] < this.getWindowPosition(0,513)[1]
-                    && self.startFlag == false ){
+                }else if( self.startFlag == false && relativePos[0] > 130/768*self.canvasWidth
+                    && relativePos[1] > 950/1209*self.canvasValidHeight
+                    && relativePos[0]  < 670/768*self.canvasWidth
+                    && relativePos[1] < 1000/1209*self.canvasValidHeight
+                     ){
                     self.restart();
-                }else if( relativePos[0] > this.getWindowPosition(71)[0]
-                    && relativePos[1] > this.getWindowPosition(0,511)[1]
-                    && relativePos[0]  < this.getWindowPosition(315)[0]
-                    && relativePos[1] < this.getWindowPosition(0,550)[1]
-                    && self.startFlag == false ){
+                }else if(  self.startFlag == false&& relativePos[0] > 130/768*self.canvasWidth
+                    && relativePos[1] >1000/1209*self.canvasValidHeight
+                    && relativePos[0]  < 670/768*self.canvasWidth
+                    && relativePos[1] < 1120/1209*self.canvasValidHeight
+                    ){
                     self.share.show();
                     setTimeout(function(){
                         self.share.hide();
@@ -125,8 +136,12 @@
                    
                 }
             }else if(e.type == "touchstart" ){
+				if(self.gameStart  != true) return;
+				var length = this.getPosition(77)[0];
+				
                 target = e.touches[0];
                 relativePos = this.getPosition(target.pageX,target.pageY);
+				self.drawPoint(relativePos[0],relativePos[1]);
                 if(self.heads){
                     for( var i in self.heads){
                         var item = self.heads[i];
@@ -154,16 +169,20 @@
 
         },
         getPosition:function(x,y){
-            var key = 0.63492;
+			//x,y针对开发环境
+          /*  var key = 640/1008;
             var raX  = x/DevelopDeviceResolution[0];
             var raY  = y/(DevelopDeviceResolution[0]/key);
-            return [raX * this.canvasWidth, raY * (this.canvasWidth/ key) ];
+			console.log("canvas Position",  [raX * this.canvasWidth, raY * (this.canvasWidth/ key) ])
+			console.log("canvas valid size", this.canvasWidth, this.canvasWidth/ key,this.canvasHeight )*/
+			//console.log("canvas valid size", this.canvasWidth, this.canvasValidHeight,this.canvasHeight )
+            return [x*2,y * 2 ];
         },
         getWindowPosition:function(x,y){
             var key = 0.63492;
             var raX  = x/DevelopDeviceResolution[0];
             var raY  = y/(DevelopDeviceResolution[0]/key);
-            console.log(raX,raY)
+           // console.log("window Position",raX,raY, [raX * this.windowWidth,raY * (this.windowWidth/ key) ])
             return [raX * this.windowWidth,raY * (this.windowWidth/ key) ];
         },
         initResources:function(){
@@ -228,6 +247,15 @@
             
             
         },
+		drawPoint:function(x,y){
+			var self = this;
+			return false;
+			this.inject["dev-point"] = [function(self){
+             
+               self.ctx.fillStyle="#0000ff";
+				self.ctx.fillRect(x,y,10,10);
+            },this];
+		},
         drawDuang:function(x,y){
             var self = this;
             var resolutionLoc = this.getPosition(30,353);
@@ -279,7 +307,7 @@
             var self = this;
             this.inject["time"] = [function(self){
                // var cutPos = self.getPosition(30,35);
-                var setPos = self.getPosition(220,45);
+                var setPos = [ 440/768*self.canvasWidth,90/1209*self.canvasValidHeight ]
                 var size ;
                 self.ctx.fillStyle="#FFF"
                 //var image = self.resources["time"].image;
@@ -291,7 +319,7 @@
         drawScore:function(){
             var self = this;
             this.inject["score"] = [function(self){
-                var setPos = self.getPosition(220,77);
+                var setPos = [ 440/768*self.canvasWidth,156/1209*self.canvasValidHeight ]
                 
                 var size ;
                 var image = self.resources["score"].image;
@@ -306,6 +334,7 @@
         },
         drawGame:function(){
             var self = this;
+			this.gameStart  = true;
             this.inject["game"] = [function(self){
                 var image = self.resources["game"].img;
                 self.ctx.fillStyle="#e0b13b";
@@ -346,7 +375,7 @@
             self.washCards(heads);
             this.heads = heads;
             this.answer = heads[5].name;
-            var answerPos = this.getPosition(0,525);
+            var answerPos =  [ 440/768*self.canvasWidth,1050/1209*self.canvasValidHeight ]
 
             this.inject["head"] = [function(self,resolution){
                 var image,i,j,item,tmp;
@@ -364,7 +393,7 @@
                 self.ctx.fillStyle="#4e3903";
                 self.ctx.textAlign="center";
                 self.ctx.font="50px Yahei";
-                self.ctx.drawImage(self.resources['wordwrap'].img,0,self.getPosition(0,319)[1],self.resources['wordwrap'].img.width,self.resources['wordwrap'].img.height);
+                self.ctx.drawImage(self.resources['wordwrap'].img,0,650/1209*self.canvasValidHeight,self.resources['wordwrap'].img.width,self.resources['wordwrap'].img.height);
 
                 self.ctx.fillText(self.answer,self.canvasWidth/2,answerPos[1]);
 
@@ -375,6 +404,7 @@
         },
         drawResult:function(num){
             num = this.scores;
+			this.gameStart  = false;
             var self = this,text,index,content;
             //num = 220
             if(num < 100){
@@ -395,21 +425,21 @@
             }
             $("title").html(content);
             var autoBreakLine = function(text,x,y,lineWidth,wordWidth,lineHeight,ctx,conf){
-                 var wordWidth = 20;
-                var lineWidth = 300;
+                 var wordWidth = Math.floor(20/768*self.canvasWidth);
+                var lineWidth =Math.floor( 290/768*self.canvasWidth );
                 var tmpText = "";
                 var cutLength = Math.floor(lineWidth/wordWidth);
                 var length = text.length;
                 var _length = 0;
                 var _height = y;
                 ctx.textAlign="center";
-                ctx.font="36px Yahei";
+                ctx.font=Math.floor( 36/768*self.canvasWidth )+"px Yahei";
                 while(1){
                     tmpText = text.substr(_length,cutLength);
                     _length+=cutLength;
                     self.ctx.fillText(tmpText,x,_height);
                     _height+=lineHeight;
-                    console.log(tmpText)
+                    //console.log(tmpText)
                     if(_length > length){
                         break;
                     }
@@ -423,9 +453,9 @@
                 self.ctx.textAlign="center";
                 self.ctx.width= "300px";
                 self.ctx.font="40px Yahei";
-                self.ctx.fillText(text,self.canvasWidth/2,self.getPosition(0,260)[1]);
+                self.ctx.fillText(text,self.canvasWidth/2,500/1209*self.canvasValidHeight);
 
-                autoBreakLine(content,self.canvasWidth/2,self.getPosition(0,330)[1],300,40,40,self.ctx);
+                autoBreakLine(content,self.canvasWidth/2,650/1209*self.canvasValidHeight,300,40,40,self.ctx);
             
                 
 
@@ -492,7 +522,7 @@
             var self = this;
             this.drawIndex();
            // self.drawDuang();
-            //self.drawResult();
+           // self.drawResult();
             this.initEnv();
             this.animate();
            
@@ -526,6 +556,7 @@
         },
         initEnv:function(){
             this.startFlag = true;
+			this.gameStart = false;
             this.runTime= this.timeLimit;
             this.scores = 0;
             this.process={};
@@ -571,7 +602,7 @@
     var showFPS=function(){
             FPS=0;
             setTimeout(function(){
-                console.log("FPS:"+FPS);
+               // console.log("FPS:"+FPS);
                 FPS =0;
                // showFPS();
             },1000);
