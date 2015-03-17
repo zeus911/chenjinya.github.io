@@ -154,6 +154,10 @@
                                self.scores+=10;
                                $(".kill-sound")[0].play()
                             }else{
+								 self.scores -=10;
+								 if(self.scores <=0 ){
+									self.scores =0;
+								 }
                                 self.drawDuang();
                                 $(".pi-sound")[0].play()
                             }
