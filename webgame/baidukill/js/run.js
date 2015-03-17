@@ -215,7 +215,10 @@
             l.loadImage("img/result2.jpg","result2");
             l.loadImage("img/result3.jpg","result3");
             l.loadImage("img/share.png","share");
-
+			l.loadImage("img/smarteye.png","smarteye");
+			l.loadImage("img/baiducloud.png","baiducloud");
+			l.loadImage("img/snowwolf.png","snowwolf");
+			l.loadImage("img/panda.png","panda");
 
             l.loadProcess(function(i,c){
                 self.stage.find(".loading").html("loading.. ("+100*(i/c).toFixed(1)+"%)");
@@ -355,19 +358,28 @@
             var speedBase = 4;
             var speedScal = 2;
             var heads=[
-                { name:"绵羊", obj: self.resources["sheep1"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"草泥马",  obj: self.resources["sheep2"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"房祖名",  obj: self.resources["fangzuming"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"蔡依林",  obj: self.resources["jolin"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"包贝尔",  obj: self.resources["bobeier"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"凤姐",  obj: self.resources["fengjie"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"差劲",  obj: self.resources["loser"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"Love",  obj: self.resources["love"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"王大治",  obj: self.resources["wangdazhi"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"王祖蓝",  obj: self.resources["wangzulan"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"杨臣刚",  obj: self.resources["yangchengang"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-                { name:"张默",  obj: self.resources["zhangmo"],speed:speedBase+speedScal*Math.random(), position:this.headPosition(true) },
-            ];
+                { name:"绵羊", obj: self.resources["sheep1"] },
+                { name:"草泥马",  obj: self.resources["sheep2"] },
+                { name:"房祖名",  obj: self.resources["fangzuming"] },
+                { name:"蔡依林",  obj: self.resources["jolin"] },
+                { name:"包贝尔",  obj: self.resources["bobeier"] },
+                { name:"凤姐",  obj: self.resources["fengjie"] },
+                { name:"差劲",  obj: self.resources["loser"] },
+                { name:"Love",  obj: self.resources["love"] },
+                { name:"王大治",  obj: self.resources["wangdazhi"] },
+                { name:"王祖蓝",  obj: self.resources["wangzulan"]},
+                { name:"杨臣刚",  obj: self.resources["yangchengang"] },
+                { name:"张默",  obj: self.resources["zhangmo"] },
+				{ name:"雪狼引擎",  obj: self.resources["snowwolf"] },
+				{ name:"慧眼引擎",  obj: self.resources["smarteye"] },
+				{ name:"百度云查杀",  obj: self.resources["baiducloud"] },
+				{ name:"熊猫烧香",  obj: self.resources["panda"] },
+
+			];
+			for(var i in heads){
+				heads[i].speed = speedBase+speedScal*Math.random();
+				heads[i].position = this.headPosition(true)
+			}
 
             var exist = [];
             self.washCards(heads);
