@@ -425,17 +425,17 @@
                 text = "成绩偏差，"+num+"分";
                 content="居然才！得！到！"+num+"分！！！放学你别跑、我保证不把你打哭！这种速度和精准性离到达“慧眼”得有N万条街的差距，你一定会加油提升“慧眼”值对不？赶紧再来爽一下吧~~"
 
-                sharetitle = "我在慧眼脸盲大PK中获得XX分！建议少看动作片、多做眼保健...";
+                sharetitle = "我在慧眼脸盲大PK中获得XX分！少看动作片、多做眼保健，修炼修炼再挑战大奖！";
             }else if( num<200){
                 index = 2;
                 text = "成绩普通，"+num+"分";
                 content="提升空间很大，不过相信骚年你一定不会满足于现在"+num+"分的成绩！想要升级“慧眼”还需要“深度学习”提升速度和精准性哦~！骚年、要不再来约一发？"
-                sharetitle = "我在慧眼脸盲大PK中获得"+num+"分！离超级大奖仅剩一步之遥！";
+                sharetitle = "我在慧眼脸盲大PK中获得"+num+"分！离超级大奖仅剩一步之遥！赶紧挑战吧！";
             }else{
                 index = 3;
                 text = "成绩优秀"+num+"分";
                 content="如此快速精准的从千万只喜羊羊中找出1只草泥马幼崽这种事显然只有目光如炬、天赋“慧眼”的你才能办得到嘛！得了"+num+"分的好成绩、骚年要不要考虑分享抽个奖？"
-                sharetitle = "我在慧眼脸盲大PK中获得"+num+"高分！拥有洞穿马赛克的能力！";
+                sharetitle = "我在慧眼脸盲大PK中获得"+num+"高分！拥有洞穿马赛克的能力！赶紧挑战赢大奖吧！";
             }
             $("title").html(sharetitle);
             var autoBreakLine = function(text,x,y,lineWidth,wordWidth,lineHeight,ctx,conf){
