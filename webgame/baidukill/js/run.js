@@ -95,21 +95,15 @@
             
             if(e.type == "click"){
                 relativePos = this.getPosition(e.x,e.y);
-                //console.log("click relativePos",relativePos)
 				self.drawPoint(relativePos[0],relativePos[1]);
-              /*  if(relativePos[0] > this.getPosition(111)[0]
-                    && relativePos[1] > this.getPosition(0,470)[1]
-                 && relativePos[0] < this.getPosition(273)[0]
-                 && relativePos[1] < this.getPosition(0,555)[1]
-                 && this.process.index == true
-                 ){*/
-				// console.log("mem",relativePos[0] , 972/1209*self.canvasValidHeight);
+				
 				 if(relativePos[0] > 239/768*self.canvasWidth
 					&& relativePos[1] >  972/1209*self.canvasValidHeight
 				 && relativePos[0] < 536/768*self.canvasWidth
 				 && relativePos[1] < 1094/1209*self.canvasValidHeight
 				 && this.process.index == true
 				 ){
+					
                     this.process.index= false;
                     delete this.inject["index"];
                     self.drawGame();
@@ -118,13 +112,14 @@
                     self.drawScore();
                     self.drawHead();
                 }else if( self.startFlag == false && relativePos[0] > 130/768*self.canvasWidth
-                    && relativePos[1] > 950/1209*self.canvasValidHeight
+                    && relativePos[1] > 900/1209*self.canvasValidHeight
                     && relativePos[0]  < 670/768*self.canvasWidth
-                    && relativePos[1] < 1000/1209*self.canvasValidHeight
+                    && relativePos[1] < 1030/1209*self.canvasValidHeight
                      ){
+					console.log("in");
                     self.restart();
                 }else if(  self.startFlag == false&& relativePos[0] > 130/768*self.canvasWidth
-                    && relativePos[1] >1000/1209*self.canvasValidHeight
+                    && relativePos[1] >1030/1209*self.canvasValidHeight
                     && relativePos[0]  < 670/768*self.canvasWidth
                     && relativePos[1] < 1120/1209*self.canvasValidHeight
                     ){
@@ -142,6 +137,7 @@
                 target = e.touches[0];
                 relativePos = this.getPosition(target.pageX,target.pageY);
 				self.drawPoint(relativePos[0],relativePos[1]);
+				
                 if(self.heads){
                     for( var i in self.heads){
                         var item = self.heads[i];
@@ -324,10 +320,8 @@
                 var size ;
                 var image = self.resources["score"].image;
                 //console.log(setPos)
-               // self.ctx.drawImage(image,cutPos[0],cutPos[1],55,55,setPos[0],setPos[1],55,55);
                 self.ctx.fillText(self.scores,setPos[0],setPos[1]);
 
-               // self.ctx.drawImage(image,0,0,image.width,image.height);
                
             },this];
 
@@ -405,6 +399,8 @@
         drawResult:function(num){
             num = this.scores;
 			this.gameStart  = false;
+			this.startFlag == false
+			this.process.index == false;
             var self = this,text,index,content;
             //num = 220
             if(num < 100){
@@ -488,12 +484,6 @@
             }
             return [Math.random()*(this.getPosition(384-77)[0]) , h]
 
-            /*
-            var pos=[12,95,178,260];
-            var i = Math.round(Math.random()*4);
-            this.headPos[pos[i]] = true;
-            return [ pos[i] , Math.random()*128]
-            */
         },
         
         resizeImage:function(image,scale){
@@ -522,7 +512,7 @@
             var self = this;
             this.drawIndex();
            // self.drawDuang();
-           // self.drawResult();
+            //self.drawResult();
             this.initEnv();
             this.animate();
            
@@ -530,6 +520,7 @@
         },
         restart:function(){
             var self = this;
+			console.log("restart");
             this.drawIndex();
             this.initEnv();
             this.animate();
