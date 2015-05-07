@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+	<title>Television</title>
+    <style type="text/css">
+     body{padding:0; margin:0;}
+     .controller{
+        position: absolute;top:0;
+     }
+    </style>
+
+</head>
+<body>
+
+	<canvas id="Television"></canvas>
+    
+    <div class="controller">
+        <span>
+            <button onclick="colorChange('r',1,10);">R +</button>
+            <input id="rv" onchange="colorChange('r',this.value);" value="" >
+            <button onclick="colorChange('r',-1,10);">R -</button>
+        </span>
+        <span>
+            <button onclick="colorChange('g',1,10);">G +</button>
+            <input id="gv"  onchange="colorChange('g',this.value);" value="" >
+            <button onclick="colorChange('g',-1,10);">G -</button>
+        </span>
+        <span>
+            <button onclick="colorChange('b',1,10);">B +</button>
+            <input id="bv"  onchange="colorChange('b',this.value);" value="" >
+            <button onclick="colorChange('b',-1,10);">B -</button>
+        </span>
+        
+    </div>
+    <script>
+    /*
+        author : Jinya (jinyachen@gmail.com)
+        Baidu.com
+        github: github.com/chenjinya
+    */
+    window.requestAnimationFrame = (function(){
+        return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          window.oRequestAnimationFrame      ||
+          window.msRequestAnimationFrame     ||
+          function(/* function */ callback, /* DOMElement */ element){
+          window.setTimeout(callback, 1000 / 60);
+        };
+      })();
+      
+    var Television = function(){
+        this.init();
+    }
+    Television.prototype={
+        init:function(){
+            this.canvas = document.getElementById("Television");
+            this.windowHeight = document.documentElement.clientHeight; 
+            this.windowWidth = window.screen.width;
+            this.canvas.width = this.windowWidth;
+            this.canvas.height = this.windowHeight;
+           
+            this.stop = false;
+            this.color={
+                r:0,
+                g:0,
+                b:0
+            };
+            this.imageData={};
+            this.words=[]
+
+            
+            this.map=[];
+            this.ctx = this.canvas.getContext("2d");
+            
+            this.initColor(this.color.r,this.color.g,this.color.b);
+           // this.animate();
+           // this.bindEvent();
+        },
+       
+        initColor:function(r,g,b){
+            if(isNaN(r)){
+                r=200,g=200,b=0;
+            }
+            
+            this.ctx.fillRect(0, 0,  this.canvas.width , this.canvas.height )
+            this.imageData = this.ctx.getImageData(0, 0,  this.canvas.width , this.canvas.height );
+            for(var i =0; i< this.imageData['data'].length; i+=12){
+                    
+                    this.imageData['data'][i] =r;
+                    this.imageData['data'][i+1] = 0;
+                    this.imageData['data'][i+2] = 0;
+
+
+                    this.imageData['data'][i+4] =0;
+                    this.imageData['data'][i+5] = g;
+                    this.imageData['data'][i+6] = 0;
+
+                    this.imageData['data'][i+8] =0;
+                    this.imageData['data'][i+9] = 0;
+                    this.imageData['data'][i+10] = b;
+                    //r i
+                    //g i+1
+                    //b i+2
+                    //a i+3
+/*                    console.log(i)
+*/            }
+            this.ctx.putImageData(this.imageData, 0, 0);
+        },
+        bindEvent:function(){
+            var self = this;
+            document.addEventListener("keypress",function(e){
+                console.log(e)
+                if(e.charCode == 32 || e.charCode == 13){
+                    self.stop = !self.stop;
+                    !self.stop && self.animate();
+                }else{
+                    var c = String.fromCharCode(e.charCode);
+                    if(self.words.indexOf(c) < 0)
+                        self.words.push(String.fromCharCode(e.charCode))
+                }
+            })
+        },
+        colorChange:function(c,l,step){
+            if(step&& step!=0){
+                this.color[c] += parseInt(l*step);
+            }else{
+                this.color[c] += parseInt(l);
+            }            
+            this.color[c] = this.color[c] > 255? 255 : this.color[c];
+            this.color[c] = this.color[c] < 0 ? 0 : this.color[c];
+            document.getElementById(c+"v").value=this.color[c];
+            
+            this.initColor(this.color.r,this.color.g,this.color.b);
+        },
+        
+        build:function(){
+            this.initColor(this.color.r,this.color.g,this.color.b);
+        },
+         
+        clearCanvas:function(canvas){
+                this.initBackground();
+        },
+        
+        animate:function(){
+            if(this.stop){
+                return;
+            }
+            this.flashSpeedIndex++
+            if(this.flashSpeedIndex < this.flashSpeed){
+                
+            }else{
+                this.flashSpeedIndex = 0;
+                this.clearCanvas([this.canvas]);
+                this.build();
+            }
+            var self = this;
+            requestAnimationFrame(function(){ self.animate() });
+        }
+
+    }
+    window.m=new Television();
+    var colorChange = function(c,l,step){
+       
+        window.m.colorChange(c,l,step)
+    }
+    </script>
+</body>
+</html>
