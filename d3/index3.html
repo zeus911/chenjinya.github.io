@@ -24,6 +24,8 @@
     .container{
       padding:10px;
       background: #786;
+            background: url(./bg.jpg) center no-repeat;
+
     }
     .radar-wrapper{
       position: relative;
@@ -382,27 +384,12 @@
             this.radarItems.data(radarItemObj)
             .enter().append('a')
             .classed("radar-item",true)
-            .style(
-              { 'left': function(d,i){ 
-                  return radarR - radarItemTextWidth/2 +  Math.sin(d.angle) * (radarR +radarItemTextWidth/2) + 'px'; 
-                },
-                'top': function(d,i,that){ 
-                  return radarR - radarItemTextHeight *2- Math.cos(d.angle) * (radarR + radarItemTextHeight*2) + 'px'; 
-                },
-                'color':function(d,i){
-                  return d3.rgb(radarItemColor[i]).brighter();
-                }
-              }
-            )
             .html(function(d,i){
               var left = Math.random()*10;
               var delay = Math.random()*3;
               var key = "mymove 5s linear " + delay + "s infinite";
               return '<div class="radar-item-body" style=" -webkit-animation:'  + key + '" ><img class="radar-item-avatar" src="'+d.avatar+'" /><span class="radar-item-name">'+d.text+'</span></div>';
             })
-            /*.text(function(d,i){
-              return d.text;
-            })*/
             .on("mouseenter",function(d,i){
                d3.select(this)
                .style("background", d3.rgb(radarItemColor[i]).darker())
@@ -413,8 +400,30 @@
                .style("background", null)
                .style("color", d3.rgb(radarItemColor[i]).brighter());
             })
-            
-            ;
+            .each(function(d,i){
+
+            })
+            .style({
+                'left': radarR - 50 + "px",
+                'top': radarR -50 + "px",
+                'opacity': 0
+            })
+            .transition()
+            .duration(600)
+            .delay(function(d,i) { return i*300; })
+            .style(
+              { 'left': function(d,i){ 
+                  return radarR - radarItemTextWidth/2 +  Math.sin(d.angle) * (radarR +radarItemTextWidth/2) + 'px'; 
+                },
+                'top': function(d,i,that){ 
+                  return radarR - radarItemTextHeight *2- Math.cos(d.angle) * (radarR + radarItemTextHeight*2) + 'px'; 
+                },
+                'color':function(d,i){
+                  return d3.rgb(radarItemColor[i]).brighter();
+                },
+                'opacity': 1
+              }
+            );
         },
         buildValue:function(radarItemValueObj, modify){
             var RIGHTPUSH = 0;
