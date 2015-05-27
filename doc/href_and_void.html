@@ -49,13 +49,13 @@
     <a href="###" >href="###"</a>
     </div>
     <div class="demo-item">
-    <a href="javascript:void(0)" >javascript:void(0);</a>
+    <a href="javascript:void(0)" > href="javascript:void(0)"</a>
     </div>
     <div class="demo-item">
-    <a href="javascript:" >javascript:;</a>
+    <a href="javascript:" >href="javascript:"</a>
     </div>
     <div class="demo-item">
-    <a href="javascript:undefined" >javascript:undefined;</a>
+    <a href="javascript:undefined" >href="javascript:undefined"</a>
     </div>
     <div class="demo-item">
     <a href="#" onClick="javascript:console.log(1);" >href="#" onClick="javascript:console.log(1);"</a>
@@ -160,7 +160,77 @@ UnaryExpression的意思是：表示包含一元运算符的表达式
     //不会调用
     delete echoNum.getNum
   </pre>
-   <p></p>
+   <h2>undefined and null</h2>
+    <pre>
+
+
+    undefined == null
+    undefined !== null
+
+    typeof null === "object"
+    typeof undefined === "undefined"
+
+    123 + null + 4 == 127
+    1+ undefined +2 == NaN
+
+    //null == 0 == ""
+
+    //undefiend 不是关键字
+    "undefined" in window
+    "NaN" in window
+    "Infinity" in window
+
+
+    var undefined = 1;
+    var null = 2;
+
+    null == false
+    //false
+    !null === !false
+    //true
+    !undefined === !false
+    //true
+
+    null instanceof Object
+   // false
+    typeof null
+   // "object"
+
+
+null  undefined 备注
+是关键字  不是关键字 
+null参与数值计算返回0 undefined参与数值计算返回NaN  
+null参与typeof运算返回object  undefined参与typeof运算返回undefined  null是对象(空对象, 没有任何属性和方法)，undefined是全局对象（window）的一个特殊属性。
+null instanceof Object运算返回false   在JavaScript的对象模型中，所有的对象都是Object或其子类的实例，但null对象例外。
+可以被转换为false，但是不等于false  可以被转换为false，但是不等于false  alert(!null);返回true。
+alert(!undefined)返回true
+  </pre>
+  <h2>NaN</h2>
+  <pre>
+    (1+ undefined +2) == NaN
+   // false
+    (1+ undefined +2)
+   // NaN
+    isNaN(NaN)
+    //true
+    isNaN("string")
+   // true
+    "string" == NaN
+   // false
+
+   NaN == NaN
+
+   isNaN()
+  </pre>
+<h2>Summy</h2>
+  <pre>
+
+    undefined === void 1 
+    null == undefined
+    !null === !undefined
+
+    NaN != anything
+  </pre>
    <script >
    document.getElementById("eventA").addEventListener("click",function(e){
     console.log(e)
