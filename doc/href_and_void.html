@@ -62,12 +62,26 @@
     </div>
     <div class="demo-item">
     <a href="#" onClick="javascript:console.log(1);return false;" > href="#" onClick="javascript:console.log(1);return false;" </a>
+
+    
+  </div>
+  <div class="demo-item">
+    
+    <a href="#" id="eventA"  >Event </a>
+    <pre>
+   document.getElementById("eventA").addEventListener("click",function(e){
+    console.log(e)
+    e.preventDefault();
+    /*return false;*/
+   })
+    </pre>
   </div>
   <div class="demo-item">
     <a name="#">a #</a>
   </div>
   <div class="demo-item">
     <a name="##">a ##</a>
+
   </div>
 
   <h2>void</h2>
@@ -114,6 +128,20 @@ UnaryExpression的意思是：表示包含一元运算符的表达式
     //1
     window.undefined
     //undefined
+    function wx(){
+
+      var undefined = 1;
+      console.log(undefined);
+    }
+
+    var if = 1
+    VM586:2 Uncaught SyntaxError: Unexpected token if
+    var typeof  = 2
+    VM626:2 Uncaught SyntaxError: Unexpected token typeof
+    var null = 3
+    VM691:2 Uncaught SyntaxError: Unexpected token null
+    var undefined = 4;
+    undefined
   </pre>
   <pre>
     var echoNum = {
@@ -133,5 +161,12 @@ UnaryExpression的意思是：表示包含一元运算符的表达式
     delete echoNum.getNum
   </pre>
    <p></p>
+   <script >
+   document.getElementById("eventA").addEventListener("click",function(e){
+    console.log(e)
+    e.preventDefault();
+    /*return false;*/
+   })
+   </script>
   </body>
 </html>
