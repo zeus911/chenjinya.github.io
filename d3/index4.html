@@ -254,6 +254,7 @@
 
     .radar-front-text{
       position: absolute;
+        z-index: 1;
       top:0;
       left:0;
       right:0;
@@ -262,7 +263,7 @@
       border:2px solid #333;
       border-radius:10px;
       width:500px;
-      
+      height:200px;
       padding:20px;
       display: none;
       background: #fff;
@@ -304,7 +305,12 @@
     </svg>
     <div class="container">
       <div j-radar-front-text class="radar-front-text">
-        <span>水映天空淡蓝色</span>勇士，
+        <span>水映天空淡蓝色</span>
+        <p>本宫喜欢小众游戏独领风骚，独领！有没有！ 2012年-本宫最爱游戏：**，**，**，**！ </p>
+        <p>
+        2012年本宫投入了*****分钟和其他人交流游戏，死忠度超过80%贴吧同好！本宫是游戏女狼！有没有！
+      </p>
+
         <div class="radar-front-text-btn-wrapper">
           <button j-radar-front-text-btn class="radar-front-text-btn" type="button" >查看我的角色</button>
         </div>
@@ -724,10 +730,7 @@
             var radarWrapper = this.radarWrapper;
             var svg = radarWrapper.select("#radar-svg");
             this.radarValueCircles = svg.selectAll(".radar-value-circle");
-            if(modify){
-              this.radarValueCircles.data(radarItemValueObj);
-              return;
-            }
+
             this.radarValueCircles .data(radarItemValueObj)
             .enter().append('svg:circle')
             .classed("radar-value-circle",true)
@@ -744,9 +747,7 @@
             .attr("stroke-width",2)
             .style("fill","#fff" )
             .style("opacity",0)
-
             .attr("r",4)
-            
             .on("mouseenter",function(e,i){
               d3.select(this).attr('r',6);
               d3.select(radarWrapper.selectAll(".radar-value")[0][i])
@@ -768,7 +769,47 @@
 
             .transition()
             .duration(6*this.animationTime)
-            .style("opacity",1)
+            .style("opacity",1);
+
+            var item;
+            this.radarPolygonLines = svg.selectAll(".radar-polygon-line");
+            this.radarPolygonLines.data(radarItemValueObj).enter()
+            .append("line")
+            .classed("radar-polygon-line",true)
+            .attr("stroke","#c163cc")
+            .attr("stroke-width",4)
+            .attr("x1",function(d,i){
+              return d.position.x;
+            })
+            .attr("y1",function(d,i){
+              return d.position.y; 
+            })
+            .attr("x2",function(d,i){
+              return d.position.x; 
+            })
+            .attr("y2",function(d,i){
+              return d.position.y;
+            })
+            .transition()
+            .duration(this.animationTime)
+            .delay(function(d,i) { return i*300; })
+            .attr("x2",function(d,i){
+              if(i == radarItemValueObj.length - 1 ){
+                item = radarItemValueObj[0];
+              } else {
+                item = radarItemValueObj[i + 1]; 
+              }
+              return item.position.x ;
+            })
+            .attr("y2",function(d,i){
+              if(i == radarItemValueObj.length - 1 ){
+                item = radarItemValueObj[0];
+              } else {
+                item = radarItemValueObj[i + 1]; 
+              }
+              return item.position.y;
+            })
+            
         },
         fixArray:function(arr){
           var radarR = this.radarR;
@@ -791,6 +832,7 @@
               this.radarPolygon.transition().attr("points",(pointsArr).join(" "))
               return;
             }*/
+
             this.radarPolygon
             .data([pointsArr.join(" ")]).enter()
             .append("polygon")
@@ -918,7 +960,7 @@
 					.transition()
 					.style({
 						"width": "2px",
-						"margin-left": "25px",
+						"margin-left": "35px",
 						"overflow" :"inherit"
 					})
 				}
