@@ -22,14 +22,17 @@
       100% { left:0px; top:0px;}
     }
     .container{
+       background: url(./habo.jpg) center no-repeat;
+
+    }
+    .radar-container{
       position: relative;
       padding:10px;
-      background: #786;
+      
       width:800px;
       height:600px;
 
       margin: 0 auto;
-      background: url(./bg.jpg) center no-repeat;
 
     }
     .radar-mask{
@@ -67,6 +70,8 @@
     .radar-item:hover{
       font-weight: bold;
       color:#333;
+      color: #fff;
+      border: 2px solid #fff;
     }
 
     .radar-item-body{
@@ -75,7 +80,9 @@
     .radar-item-avatar{
       width:50px;
       height:50px;
-      border-radius: 5px;
+      border:2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #FFF;
     }
     .radar-item-name{
       display: block;
@@ -146,29 +153,31 @@
   </head>
 
   <body>
-    
-    <svg style="height:0;">
-        <defs>
-        <radialGradient id="radar-grad" cx="50%" cy="50%" r="50%"
-        fx="50%" fy="50%">
-        <stop offset="0%" style="stop-color:#cc6363;
-        stop-opacity:0"/>
-        <stop offset="100%" style="stop-color:#c163cc;
-        stop-opacity:1"/>
-        </radialGradient>
-        </defs>
-    </svg>
-    <div class="container">
+    <div class="container" >
+      <svg style="height:0;">
+          <defs>
+          <radialGradient id="radar-grad" cx="50%" cy="50%" r="50%"
+          fx="50%" fy="50%">
+          <stop offset="0%" style="stop-color:#FFCC00;
+          stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#FF9900;
+          stop-opacity:1"/>
+          </radialGradient>
+          </defs>
+      </svg>
+      <div class="radar-container">
 
-    <div id="main-wrapper" class="main-wrapper">
-      <div id="radar-wrapper" class="radar-wrapper">
-  <!--     <img class="radar-broken" src="./broken.png" />
-   --></div>
+      <div id="main-wrapper" class="main-wrapper">
+        <div id="radar-wrapper" class="radar-wrapper">
+    <!--     <img class="radar-broken" src="./broken.png" />
+     --></div>
 
-      
-    </div>
-    <div id="radar-mask" class="radar-mask" ></div>
+        
+      </div>
+     
   </div>
+   <div id="radar-mask" class="radar-mask" ></div>
+    </div>
     <script type="text/javascript">
       
       //values.reverse();
@@ -387,10 +396,6 @@
               });
 			 
             }
-			
-			
-			
-           
             radarSubItems.data(radarSubItemObj)
             .enter().append('a')
             .classed("radar-subitem",true)
@@ -410,7 +415,7 @@
                   return radarSubPos.left + radarSubR - radarSubItemTextWidth/2 +  Math.sin(d.angle) * 100 + 'px'; 
                 },
                 'top': function(d,i,that){ 
-                  return radarSubPos.top + radarSubR/1.5  - radarSubItemTextHeight/2 - Math.cos(d.angle) * 70 + 'px'; 
+                  return radarSubPos.top + radarSubR/1.2  - radarSubItemTextHeight/2 - Math.cos(d.angle) * 80 + 'px'; 
                 },
                 'opacity': 1
               }
@@ -436,7 +441,6 @@
                 }
                 return list;
             })();
-
             this.radarItems = radarWrapper.selectAll(".radar-item");
             if(modify){
               this.radarItems.data(radarItemObj);
@@ -453,13 +457,17 @@
             })
             .on("mouseenter",function(d,i){
                d3.select(this)
-               .style("background", d3.rgb(radarItemColor[i]).darker())
-               .style("color", "#fff");
+               .style({
+                  "background": d3.rgb(radarItemColor[i]).darker(),
+                  "color": "#fff"
+               });
             })
             .on("mouseleave",function(d,i){
                d3.select(this)
-               .style("background", null)
-               .style("color", d3.rgb(radarItemColor[i]).brighter());
+               .style({
+                  "background": null,
+                  "color": d3.rgb(radarItemColor[i]).brighter(),
+               });
             })
             .on("click",function() {
               var dom = d3.select(this);
@@ -577,7 +585,7 @@
             this.radarPolygonLines.data(radarItemValueObj).enter()
             .append("line")
             .classed("radar-polygon-line",true)
-            .attr("stroke","#c163cc")
+            .attr("stroke","#FF9900")
             .attr("stroke-width",4)
             .attr("x1",function(d,i){
               return d.position.x;
@@ -649,9 +657,6 @@
                 return d3.select(this).attr("data-top") + "px";
               })
             })
-
-            .transition()
-            .duration(6*this.animationTime)
             .style("opacity",1);
 
             
@@ -696,7 +701,7 @@
              radarWrapper.selectAll(".radar-value")
               .style("opacity",null);
             })
-            .attr("points",this.fixArray([]).join(" "))
+            /*.attr("points",this.fixArray([]).join(" "))
             .transition()
             .duration(animationTime)
             .attr("points",this.fixArray(pointsArr.slice(0,2)).join(" "))
@@ -710,10 +715,20 @@
             .duration(animationTime)
             .attr("points",this.fixArray(pointsArr.slice(0,5)).join(" "))
             .transition()
-            .duration(animationTime)
+            .duration(6*animationTime)*/
             .attr("points",function(d){ return d; })
            // .style("fill","#f89");
-            .style("fill","url(#radar-grad)")
+            .style({
+              'fill': "url(#radar-grad)",
+              'opacity': '0'
+
+            })
+            .transition()
+            .delay(4*animationTime)
+            .style({
+              'opacity': '1'
+
+            })
             //var valueR = (width + 25 );
 
             
