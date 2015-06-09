@@ -21,18 +21,24 @@
       75%  { left:-5px;top:-5px;}
       100% { left:0px; top:0px;}
     }
+    body{
+      background: url(./habo.jpg) center no-repeat;
+    }
     .container{
-       background: url(./habo.jpg) center no-repeat;
+        width: 820px;
+        margin: 0 auto;
+        
 
     }
     .radar-container{
       position: relative;
       padding:10px;
       
-      width:800px;
+      width:620px;
       height:600px;
 
       margin: 0 auto;
+      float: left;
 
     }
     .radar-mask{
@@ -148,13 +154,76 @@
     .main-wrapper{
       opacity: 1;
     }
+
+
+    .main{
+
+    }
+    .user-section{
+      float: left;
+      width:180px;
+      margin-top:100px;
+      
+    }
+    .user-name{
+        color:#EEE;
+        text-align: center;
+
+    }
+    .user-avatar{
+      width: 80px;
+      height: 80px;
+      padding:1px;
+      border:1px solid #aaa;
+      display: block;
+      margin: 0 auto;
+
+
+    }
+    .pk-btn{
+      background: #E33;
+      border:2px solid #F77;
+      display: block;
+      text-align: center;
+      margin: 0 auto;
+      width: 100px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 24px;
+      font-weight: bold;
+      color:#FFF;
+    }
+    .user-property{
+      margin-top: 10px;
+    }
+    .user-property-item{
+      margin:2px;
+      line-height: 30px;
+    }
+    .user-property-key{
+      display: inline-block;
+      width:50px;
+      height:30px;
+      background: #e35454;
+      text-align: right;
+      padding-right:10px;
+      color:#FFF;
+    }
+    .user-property-value{
+      display: inline-block;
+      width:100px;
+      height:30px;
+      background: #517fe8;
+      text-align: left;
+      padding-left:10px;
+      color:#FFF;
+    }
     </style>
 
   </head>
 
   <body>
-    <div class="container" >
-      <svg style="height:0;">
+    <svg style="height:0;">
           <defs>
           <radialGradient id="radar-grad" cx="50%" cy="50%" r="50%"
           fx="50%" fy="50%">
@@ -165,18 +234,46 @@
           </radialGradient>
           </defs>
       </svg>
-      <div class="radar-container">
+    <div class="container" >
+      <div class="main">
+          <div class="user-section">
+              <div>
+                  <img  class="user-avatar" src="./avatar.jpg" />
+                  <p class="user-name">金亚哈哈哈</p>
+              </div>
+              <a class="pk-btn">PK</a>
+              <div class="user-property" >
+                <div class="user-property-item">
+                  <span class="user-property-key">统帅</span><span class="user-property-value">123</span>
+                </div>
+                <div class="user-property-item">
+                  <span class="user-property-key">武力</span><span class="user-property-value">123</span>
+                </div>
+                <div class="user-property-item">
+                  <span class="user-property-key">智力</span><span class="user-property-value">123</span>
+                </div>
+                <div class="user-property-item">
+                  <span class="user-property-key">暴击</span><span class="user-property-value">123</span>
+                </div>
+                <div class="user-property-item">
+                  <span class="user-property-key">耐力</span><span class="user-property-value">123</span>
+                </div>
+              </div>
+          </div>
+          <div class="radar-container">
 
-      <div id="main-wrapper" class="main-wrapper">
-        <div id="radar-wrapper" class="radar-wrapper">
-    <!--     <img class="radar-broken" src="./broken.png" />
-     --></div>
+            <div id="main-wrapper" class="main-wrapper">
+              <div id="radar-wrapper" class="radar-wrapper">
+          <!--     <img class="radar-broken" src="./broken.png" />
+           --></div>
 
-        
+              
+            </div>
+         
+          </div>
+          <div id="radar-mask" class="radar-mask" ></div>
       </div>
-     
-  </div>
-   <div id="radar-mask" class="radar-mask" ></div>
+      
     </div>
     <script type="text/javascript">
       
@@ -210,12 +307,6 @@
           value:"84",
           avatar:"./avatar.jpg"
 
-        },
-        {
-          text:"爆发",
-          value:"120",
-          avatar:"./avatar.jpg"
-
         }
       ];
      function radarBuilder(conf){
@@ -223,7 +314,8 @@
      };
      radarBuilder.prototype={
         PI:Math.PI,
-        angleList:[0,Math.PI/3,Math.PI*2/3,Math.PI,Math.PI*4/3,Math.PI*5/3],
+        angleList:[0,2*Math.PI/5,2*Math.PI*2/5,2*Math.PI*3/5,2*Math.PI*4/5],
+        angleList6:[0,2*Math.PI/6,2*Math.PI*2/6,2*Math.PI*3/6,2*Math.PI*4/6,2*Math.PI*5/6],
         radarCircleList:[140,120,100, 80, 60, 40, 20],
         radarItemColor:[
             "#E60033",//红色
@@ -330,8 +422,8 @@
             var svg = radarWrapper.select("#radar-svg");
             for(var i in radarItemList){
               var v = radarItemList[i].value;
-              x[i] = Math.floor(radarR + ( v * Math.sin((PI/3)*i)));
-              y[i] = Math.floor(radarR -  v * Math.cos((PI/3)*i));
+              x[i] = Math.floor(radarR + ( v * Math.sin((2*PI/5)*i)));
+              y[i] = Math.floor(radarR -  v * Math.cos((2*PI/5)*i));
               pointsArr .push( x[i]+","+y[i]+"");
             }
             var pointsStr = pointsArr.join(" ");
@@ -366,14 +458,14 @@
             var radarSubItemTextHeight = 50;
             var radarSubItemColor = this.radarItemColor;
             var radarWrapper = this.radarWrapper;
-            var angleList = this.angleList;
+            var angleList6 = this.angleList6;
             var radarSubItemObj = (function(){
               var list=[];
                 for(var i in radarSubItemList){
                   list.push({
                     text: radarSubItemList[i].forum_name,
                     avatar: radarSubItemList[i].avatar,
-                    angle: angleList[i]
+                    angle: angleList6[i]
                   })
                 }
                 return list;
