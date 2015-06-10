@@ -1,0 +1,925 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <script src="./d3/d3.min.js" charset="utf-8"></script>
+
+    <title>d3</title>
+    <style type="text/css">
+
+    @-webkit-keyframes mymove /* Safari 和 Chrome */
+    {
+      0%   {left:0px; top:0px;}
+      25%  { left:-5px; top:5px;}
+      50%  { left:5px;top:5px;}
+      75%  { left:-5px;top:-5px;}
+      100% { left:0px; top:0px;}
+    }
+    body{
+      background: url(./habo.jpg) center no-repeat;
+      margin:0;
+      padding:0;
+    }
+    .container{
+        /*width: 820px;
+        margin: 0 auto;*/
+        background: url(./img/container.jpg) center 0 no-repeat #1456b3;
+
+        
+
+    }
+    .radar-container{
+      position: relative;
+      padding:10px;
+      
+      width:620px;
+      height:600px;
+
+      margin: 0 auto;
+      float: left;
+
+    }
+    .radar-mask{
+      width: 100%;
+      height:100%;
+      position: absolute;
+      top:0;
+      left:0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+	     z-index:8;
+    }
+    .radar-wrapper{
+      position: relative;
+      width:300px;
+      height:300px;
+      margin:150px auto 100px
+      
+    }
+    .radar-item{
+      position: absolute;
+      text-align: center;
+      line-height: 20px;
+      
+      width:100px;
+      border-radius: 5px;
+      padding:5px;
+      color:#666;
+      cursor: pointer;
+      display: block;
+      
+
+
+    }
+    .radar-item:hover{
+      font-weight: bold;
+      color:#333;
+      color: #fff;
+      /*border: 2px solid #fff;*/
+    }
+
+    .radar-item-body{
+      position: relative;
+    }
+    .radar-item-avatar{
+      width:50px;
+      height:50px;
+      border:2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #FFF;
+    }
+    .radar-item-name{
+      display: block;
+      font-weight: bold;
+    }
+
+    .radar-subitem{
+      position: absolute;
+	  z-index:10;
+      text-align: center;
+      line-height: 20px;
+      
+      width:50px;
+      border-radius: 5px;
+      padding:5px;
+      color:#666;
+      cursor: pointer;
+      display: block;
+      
+
+
+    }
+    .radar-subitem:hover{
+      font-weight: bold;
+      color:#333;
+    }
+
+    .radar-subitem-body{
+      position: relative;
+    }
+    .radar-subitem-avatar{
+      width:30px;
+      height:30px;
+      border-radius: 5px;
+    }
+    .radar-subitem-name{
+      font-size: 12px;
+      color:#fff;
+      display: block;
+    }
+    .radar-value{
+       position: absolute;
+       display: block;
+       
+      text-align: center;
+      line-height: 14px;
+      height:14px;
+      padding: 5px 5px;
+      font-weight: bold;
+      opacity:0.5;
+    
+      color:#fff;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    /*.radar-value:hover{
+      opacity:1;
+    }*/
+    
+    .radar-value-circle{
+      cursor: pointer;
+    }
+   
+    .main-wrapper{
+      opacity: 1;
+    }
+
+
+    .header{
+      background: url(./img/header.jpg) center 0 no-repeat #081226;
+      height:390px;
+      margin:0;
+      width:100%;
+    }
+
+    .main{
+      width:820px;
+      margin:0 auto;
+      height:800px;
+      padding-top:180px;
+    }
+    .user-section{
+      float: left;
+      width:180px;
+      margin-top:100px;
+      
+    }
+    .user-avatar-section{
+       /* background: url(./img/avatar_side.png) no-repeat;*/
+    }
+    .user-name{
+        color:#EEE;
+        text-align: center;
+
+    }
+    .user-avatar{
+      width: 80px;
+      height: 80px;
+      padding:1px;
+      border:1px solid #aaa;
+      display: block;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0px 0px 13px #fff;
+
+
+    }
+    .user-avatar-side{
+      margin: 0 auto;
+      margin-bottom:-10px;
+      width:150px;
+      display: block;
+      position: relative;
+      z-index: 1;
+
+    }
+    .user-avatar-side2{
+      margin: 10px auto;
+      margin-top:-20px;
+      width:150px;
+      display: block;
+      position: relative;
+      z-index: 1;
+
+    }
+    .pk-btn{
+      background: #E33;
+      border:2px solid #F77;
+      display: block;
+      text-align: center;
+      margin: 0 auto;
+      width: 100px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 24px;
+      font-weight: bold;
+      color:#FFF;
+    }
+    .user-property{
+      margin-top: 10px;
+    }
+    .user-property-item{
+      margin:5px;
+      line-height: 30px;
+    }
+    .user-property-key{
+      display: inline-block;
+      width:40px;
+      height:30px;
+      background: url(./img/item_bg.jpg) no-repeat -118px 0 #e03c3c;
+
+      text-align: right;/* #e03c3c*/
+      padding-right:30px;
+      color:#FFF;
+
+    }
+    .user-property-value{
+      display: inline-block;
+      width:90px;
+      height:30px;
+      background: #3c66e0;
+      text-align: left;
+      padding-left:10px;
+      color:#FFF;
+    }
+    </style>
+
+  </head>
+
+  <body>
+    
+      <!-- <div class="header">
+
+      </div> -->
+    <div class="container" >
+      
+      <div class="main">
+          <div class="user-section">
+              <div class="user-avatar-section">
+                  <img  class="user-avatar-side" src="./img/avatar_side.png" />
+                  <img  class="user-avatar" src="./img/avatar.jpg" />
+                 
+                  <p class="user-name">金亚哈哈哈</p>
+                  <img  class="user-avatar-side2" src="./img/avatar_side2.png" />
+              </div>
+              <a class="pk-btn">PK</a>
+              <div class="user-property" >
+                <div class="user-property-item">
+                  <span class="user-property-key">统帅</span><span class="user-property-value">123</span>
+                </div>
+                <div class="user-property-item">
+                  <span class="user-property-key">武力</span><span class="user-property-value">123</span>
+                </div>
+                <div class="user-property-item">
+                  <span class="user-property-key">智力</span><span class="user-property-value">123</span>
+                </div>
+                <div class="user-property-item">
+                  <span class="user-property-key">暴击</span><span class="user-property-value">123</span>
+                </div>
+                <div class="user-property-item">
+                  <span class="user-property-key">耐力</span><span class="user-property-value">123</span>
+                </div>
+              </div>
+          </div>
+          <div class="radar-container">
+
+            <div id="main-wrapper" class="main-wrapper">
+              <div id="radar-wrapper" class="radar-wrapper">
+          <!--     <img class="radar-broken" src="./broken.png" />
+           --></div>
+
+              
+            </div>
+         
+          </div>
+          <div id="radar-mask" class="radar-mask" ></div>
+      </div>
+      <svg style="height:0; ">
+          <defs>
+          <radialGradient id="radar-grad" cx="50%" cy="50%" r="50%"
+          fx="50%" fy="50%">
+          <stop offset="0%" style="stop-color:#FFCC00;
+          stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#FF9900;
+          stop-opacity:1"/>
+          </radialGradient>
+          </defs>
+      </svg>
+    </div>
+    <script type="text/javascript">
+      
+      //values.reverse();
+      var radarItemList = [
+        {
+          text:"统帅",
+          value:"100",
+          avatar:"./img/leader.png"
+        },
+        {
+          text:"武力",
+          value:"90",
+          avatar:"./img/force.png"
+
+        },
+        {
+          text:"智力",
+          value:"60",
+          avatar:"./img/intelligence.png"
+
+        },
+        {
+          text:"暴击",
+          value:"110",
+          avatar:"./img/crit.png"
+
+        },
+        {
+          text:"耐力",
+          value:"84",
+          avatar:"./img/patience.png"
+
+        }
+      ];
+     function radarBuilder(conf){
+        this.init(conf);
+     };
+     radarBuilder.prototype={
+        PI:Math.PI,
+        angleList:[0,2*Math.PI/5,2*Math.PI*2/5,2*Math.PI*3/5,2*Math.PI*4/5],
+        angleList6:[0,2*Math.PI/6,2*Math.PI*2/6,2*Math.PI*3/6,2*Math.PI*4/6,2*Math.PI*5/6],
+        radarCircleList:[140,120,100, 80, 60, 40, 20],
+        radarItemColor:[
+            "#E60033",//红色
+            "#2CA9E1",//蓝色
+            "#DCCB18",//黄色
+            "#00A381",//绿色
+            "#EC6800",//橘黄
+            "#65318E"//紫色
+          ],
+        radarR: 140,
+        radarItemTextWidth: 100,
+        radarItemTextHeight: 20,
+        radarItemValueWidth: 100,
+        radarItemValueHeight: 14,
+        animationTime: 500,
+        init:function(conf) {
+            this.radarItemList = conf;
+           // this.initText();
+            this.initRadar();
+            this.bindEvent();
+
+        },
+        initText: function() {
+          d3.select("[j-radar-front-text]")
+          .style({
+            'display': 'block'
+          });
+        },
+        initRadar:function(){
+          /*var radarR = 140;
+          var radarItemTextWidth = 100;
+          var radarItemTextHeight = 20;
+          var radarItemValueWidth = 100;
+          var radarItemValueHeight = 14;
+          var PI = Math.PI;
+          var angleList=[0,PI/3,PI*2/3,PI,PI*4/3,PI*5/3];
+
+          var radarCircleList = [140,120,100, 80, 60, 40, 20];
+          var radarItemColor = [
+            "#E60033",//红色
+            "#2CA9E1",//蓝色
+            "#DCCB18",//黄色
+            "#B8D200",//绿色
+            "#EC6800",//橘黄
+            "#65318E"//紫色
+          ];*/
+          var radarItemList = this.radarItemList;
+          this.radarWrapper =  d3.select("#radar-wrapper");
+          this.radarWrapper
+          .append("svg")
+          .attr("id","radar-svg")
+          .attr("width","300")
+          .attr("height","300")
+          .classed("radar-svg",true) ;
+          
+          d3.select("#main-wrapper").transition().style('opacity',1);
+
+          this.buildRadarCircle();
+          this.buildRadarLine();
+          this.buildDynamicData(radarItemList);
+          
+        },
+        bindEvent: function() {
+          var self = this;
+          d3.select("[j-radar-front-text-btn]").on("click",function() {
+              self.hideText();
+              setTimeout(function() {
+                 self.initRadar();
+              },self.animationTime);
+             
+          });
+        },
+        hideText: function() {
+          d3.select("[j-radar-front-text]")
+          .transition()
+          .duration(this.animationTime)
+          .style({
+            'width': 50 + 'px',
+            'height': 50 + 'px',
+            'overflow': 'hidden',
+            'margin-top': '10px',
+            'margin-left': '10px'
+
+          })
+        },
+        clear:function(){
+          this.radarWrapper.html("");
+        },
+        buildDynamicData:function(radarItemList,modify){
+            var x = [], y = [] ;
+            var pointsArr = [];
+            var pointsValueArr = [];
+            var radarR = this.radarR;
+            var radarWrapper = this.radarWrapper;
+            var radarItemColor = this.radarItemColor;
+            var angleList = this.angleList;
+            var radarCircleList = this.radarCircleList;
+            var radarItemTextWidth = this.radarItemTextWidth;
+            var radarItemTextHeight = this.radarItemTextHeight;
+            var radarItemValueWidth = this.radarItemValueWidth;
+            var radarItemValueHeight = this.radarItemValueHeight;
+            var PI = this.PI;
+            var animationTime = this.animationTime;
+            var svg = radarWrapper.select("#radar-svg");
+            for(var i in radarItemList){
+              var v = radarItemList[i].value;
+              x[i] = Math.floor(radarR + ( v * Math.sin((2*PI/5)*i)));
+              y[i] = Math.floor(radarR -  v * Math.cos((2*PI/5)*i));
+              pointsArr .push( x[i]+","+y[i]+"");
+            }
+            var pointsStr = pointsArr.join(" ");
+            var radarItemValueObj = (function(){
+                var list=[];
+                for(var i in radarItemList){
+                  list.push({
+                    value: radarItemList[i].value,
+                    position: { x: x[i], y: y[i] }
+                    
+                  })
+                }
+                return list;
+            })();
+            
+            this.buildPolygon(radarItemList , pointsArr,modify);
+            this.buildValueCircle( radarItemValueObj,modify);
+            this.buildValue (radarItemValueObj,modify);
+            this.buildItem(radarItemList,modify);
+
+            
+        },
+        buildSubItem: function( point,radarSubItemList ) {
+			
+            var radarR = this.radarR;
+            var radarSubPos = {
+              left: parseInt(point.left),
+              top: parseInt(point.top)
+            }
+            var radarSubR  = 50;
+            var radarSubItemTextWidth = 50;
+            var radarSubItemTextHeight = 50;
+            var radarSubItemColor = this.radarItemColor;
+            var radarWrapper = this.radarWrapper;
+            var angleList6 = this.angleList6;
+            var radarSubItemObj = (function(){
+              var list=[];
+                for(var i in radarSubItemList){
+                  list.push({
+                    text: radarSubItemList[i].forum_name,
+                    avatar: radarSubItemList[i].avatar,
+                    angle: angleList6[i]
+                  })
+                }
+                return list;
+            })();
+
+            var radarSubItems = radarWrapper.selectAll(".radar-subitem");
+            if (radarSubItems.length > 0){
+				
+               radarSubItems.each(function(){ 
+                 d3.select(this)
+                  .transition()
+                  .duration(600)
+                  .style({
+                    'left': radarSubPos.left + radarSubR/2 + "px",
+                    'top': radarSubPos.top + radarSubR/2 + "px",
+                    'opacity': 0
+                  })
+                  .remove();
+                  
+              });
+			 
+            }
+            radarSubItems.data(radarSubItemObj)
+            .enter().append('a')
+            .classed("radar-subitem",true)
+            .html(function(d,i){
+              return '<div class="radar-subitem-body"  ><img class="radar-subitem-avatar" src="'+d.avatar+'" /><span class="radar-subitem-name">'+d.text+'</span></div>';
+            })
+            .style({
+                'left': radarSubPos.left + radarSubR/2 + "px",
+                'top': radarSubPos.top + radarSubR/2 + "px",
+                'opacity': 0
+            })
+            .transition()
+            .duration(600)
+            .delay(function(d,i) { return i*300; })
+            .style(
+              { 'left': function(d,i){ 
+                  return radarSubPos.left + radarSubR - radarSubItemTextWidth/2 +  Math.sin(d.angle) * 100 + 'px'; 
+                },
+                'top': function(d,i,that){ 
+                  return radarSubPos.top + radarSubR/1.2  - radarSubItemTextHeight/2 - Math.cos(d.angle) * 80 + 'px'; 
+                },
+                'opacity': 1
+              }
+            );
+        },
+        buildItem:function(radarItemList,modify){
+            //draw item
+            var self = this;
+            var radarR = this.radarR;
+            var radarItemTextWidth = this.radarItemTextWidth;
+            var radarItemTextHeight = this.radarItemTextHeight;
+            var radarItemColor = this.radarItemColor;
+            var radarWrapper = this.radarWrapper;
+            var angleList = this.angleList;
+            var radarItemObj = (function(){
+              var list=[];
+                for(var i in radarItemList){
+                  list.push({
+                    text: radarItemList[i].text,
+                    avatar: radarItemList[i].avatar,
+                    angle: angleList[i]
+                  })
+                }
+                return list;
+            })();
+            this.radarItems = radarWrapper.selectAll(".radar-item");
+            if(modify){
+              this.radarItems.data(radarItemObj);
+              return;
+            }
+            this.radarItems.data(radarItemObj)
+            .enter().append('a')
+            .classed("radar-item",true)
+            .html(function(d,i){
+              var left = Math.random()*10;
+              var delay = Math.random()*3;
+              var key = "mymove 5s linear " + delay + "s infinite";
+              return '<div class="radar-item-body" style=" -webkit-animation:'  + key + '" ><img class="radar-item-avatar" src="'+d.avatar+'" /><span class="radar-item-name">'+d.text+'</span></div>';
+            })/*
+            .on("mouseenter",function(d,i){
+               d3.select(this)
+               .style({
+                  "background": d3.rgb(radarItemColor[i]).darker(),
+                  "color": "#fff"
+               });
+            })
+            .on("mouseleave",function(d,i){
+               d3.select(this)
+               .style({
+                  "background": null,
+                  "color": d3.rgb(radarItemColor[i]).brighter(),
+               });
+            })*/
+            .on("click",function() {
+              var dom = d3.select(this);
+              var point = {
+                left: dom.style("left"),
+                top: dom.style("top")
+              };
+            	  if( dom.attr("clicked") ){
+            			dom.style({
+            				"z-index":0
+            			});
+            			d3.select("#radar-mask")
+            			.style("display","none");
+            			dom.attr("clicked",null);
+            	  }else {
+            		dom.style({
+            			"z-index":9
+            		  });
+            		  d3.select("#radar-mask")
+            		.style({
+                  display: "block",
+                  height: document.body.clientHeight + "px"
+                });
+            		dom.attr("clicked",true)
+            	  }
+            	  
+              var list = [
+                {
+                  forum_name:"123123",
+                  avatar:"./avatar.jpg"
+                },
+                {
+                  forum_name:"123123",
+                  avatar:"./avatar.jpg"
+                },
+                {
+                  forum_name:"123123",
+                  avatar:"./avatar.jpg"
+                },
+                {
+                  forum_name:"123123",
+                  avatar:"./avatar.jpg"
+                },
+                {
+                  forum_name:"123123",
+                  avatar:"./avatar.jpg"
+                },
+                {
+                  forum_name:"123123",
+                  avatar:"./avatar.jpg"
+                }
+              ];
+              self.buildSubItem(point,list);
+            })
+            .style({
+                'left': radarR - 50 + "px",
+                'top': radarR -50 + "px",
+                'opacity': 0
+            })
+            .transition()
+            .duration(600)
+            .delay(function(d,i) { return i*300; })
+            .style(
+              { 'left': function(d,i){ 
+                  return radarR - radarItemTextWidth/2 +  Math.sin(d.angle) * (radarR +radarItemTextWidth/2) + 'px'; 
+                },
+                'top': function(d,i,that){ 
+                  return radarR - radarItemTextHeight *2.2- Math.cos(d.angle) * (radarR + radarItemTextHeight*2.2) + 'px'; 
+                },
+                'color':function(d,i){
+                  return d3.rgb(radarItemColor[i]).brighter();
+                },
+                'opacity': 1
+              }
+            );
+        },
+        buildValue:function(radarItemValueObj, modify){
+            var RIGHTPUSH = 0;
+            var radarItemColor = this.radarItemColor;
+            var radarWrapper = this.radarWrapper;
+            this.radarItems = radarWrapper.selectAll(".radar-value");
+            if(modify){
+              this.radarItems.data(radarItemValueObj);
+              return;
+            }
+            
+            this.radarItems.data(radarItemValueObj)
+            .enter().append('a')
+            .classed("radar-value",true)
+            .attr("data-top",function(d) { return d.position.y - parseInt(30); } )
+            .style(
+              { 'left': function(d,i){ 
+                  return d.position.x - RIGHTPUSH + 'px'; 
+                },
+                'top': function(d,i,that){ 
+                  return d.position.y - parseInt(30) + 'px'; 
+                },
+                
+                'background':function(d,i){
+                  return radarItemColor[i];
+                }
+              }
+            )
+            .text(function(d,i){
+              return d.value;
+            });
+        },
+        buildValueCircle:function(radarItemValueObj, modify){
+            //draw value
+            
+            var radarItemColor = this.radarItemColor;
+            var radarWrapper = this.radarWrapper;
+            var svg = radarWrapper.select("#radar-svg");
+
+            var item;
+            //line
+            this.radarPolygonLines = svg.selectAll(".radar-polygon-line");
+            this.radarPolygonLines.data(radarItemValueObj).enter()
+            .append("line")
+            .classed("radar-polygon-line",true)
+            .attr("stroke","#FF9900")
+            .attr("stroke-width",4)
+            .attr("x1",function(d,i){
+              return d.position.x;
+            })
+            .attr("y1",function(d,i){
+              return d.position.y; 
+            })
+            .attr("x2",function(d,i){
+              return d.position.x; 
+            })
+            .attr("y2",function(d,i){
+              return d.position.y;
+            })
+            .transition()
+            .duration(this.animationTime)
+            .delay(function(d,i) { return i*300; })
+            .attr("x2",function(d,i){
+              if(i == radarItemValueObj.length - 1 ){
+                item = radarItemValueObj[0];
+              } else {
+                item = radarItemValueObj[i + 1]; 
+              }
+              return item.position.x ;
+            })
+            .attr("y2",function(d,i){
+              if(i == radarItemValueObj.length - 1 ){
+                item = radarItemValueObj[0];
+              } else {
+                item = radarItemValueObj[i + 1]; 
+              }
+              return item.position.y;
+            });
+
+            //cricle
+            this.radarValueCircles = svg.selectAll(".radar-value-circle");
+
+            this.radarValueCircles .data(radarItemValueObj)
+            .enter().append('svg:circle')
+            .classed("radar-value-circle",true)
+            
+            .attr("cx",function(d){
+              return d.position.x 
+            })
+            .attr("cy",function(d){
+              return d.position.y
+            })
+            .attr("stroke",function(d,i){
+                  return radarItemColor[i];
+                })
+            .attr("stroke-width",2)
+            .style("fill","#fff" )
+            .style("opacity",0)
+            .attr("r",4)
+            .on("mouseenter",function(e,i){
+              d3.select(this).attr('r',6);
+              d3.select(radarWrapper.selectAll(".radar-value")[0][i])
+              .style("opacity","1")
+              .transition()
+              .style("top",function(){
+                return d3.select(this).attr("data-top") - 5 + "px";
+              });
+            })
+            .on("mouseleave",function(e,i){
+              d3.select(this).attr('r',4);
+              d3.select(radarWrapper.selectAll(".radar-value")[0][i])
+              .style("opacity",null)
+              .transition()
+              .style("top",function(){
+                return d3.select(this).attr("data-top") + "px";
+              })
+            })
+            .style("opacity",1);
+
+            
+            
+        },
+        fixArray:function(arr){
+          var radarR = this.radarR;
+          if ( arr.length < 6 ){
+            for( var i = arr.length - 1; i<6; i++){
+                arr.push(radarR+','+radarR);
+            }
+          }
+          return arr;
+        },
+        buildPolygon:function(radarItemList, pointsArr, modify){
+            var radarWrapper = this.radarWrapper;
+            var radarR = this.radarR;
+            var animationTime = this.animationTime;
+            var PI = this.PI;
+            var svg = radarWrapper.select("#radar-svg");
+           
+            this.radarPolygon = svg.selectAll(".radar-polygon")
+            /*if(modify){
+              this.radarPolygon.transition().attr("points",(pointsArr).join(" "))
+              return;
+            }*/
+
+            this.radarPolygon
+            .data([pointsArr.join(" ")]).enter()
+            .append("polygon")
+            .classed("radar-polygon",true)
+            .attr("stroke","#eee")
+            .attr("stroke-width",1)
+            .style("fill","url(#radar-grad)")
+            //.style("fill","#7058a3")
+            .style("opacity",.8)
+             .on("mouseenter",function(e,i){
+              radarWrapper.selectAll(".radar-value")
+              .style("opacity","1");
+            })
+            .on("mouseleave",function(e,i){
+             radarWrapper.selectAll(".radar-value")
+              .style("opacity",null);
+            })
+            /*.attr("points",this.fixArray([]).join(" "))
+            .transition()
+            .duration(animationTime)
+            .attr("points",this.fixArray(pointsArr.slice(0,2)).join(" "))
+            .transition()
+            .duration(animationTime)
+            .attr("points",this.fixArray(pointsArr.slice(0,3)).join(" "))
+            .transition()
+            .duration(animationTime)
+            .attr("points",this.fixArray(pointsArr.slice(0,4)).join(" "))
+            .transition()
+            .duration(animationTime)
+            .attr("points",this.fixArray(pointsArr.slice(0,5)).join(" "))
+            .transition()
+            .duration(6*animationTime)*/
+            .attr("points",function(d){ return d; })
+           // .style("fill","#f89");
+            .style({
+              'fill': "url(#radar-grad)",
+              'opacity': '0'
+
+            })
+            .transition()
+            .delay(4*animationTime)
+            .style({
+              'opacity': '1'
+
+            })
+            //var valueR = (width + 25 );
+
+            
+            
+        },
+        buildRadarCircle:function(){
+            //draw circle
+            var radarR = this.radarR;
+            var svg = this.radarWrapper.select("#radar-svg");
+            this.radarCircles = svg.selectAll('.radar-circle')
+            .data(this.radarCircleList)
+            .order()
+            .enter().append("circle")
+            .attr("cx",radarR)
+            .attr("cy",radarR)
+            .attr("stroke","#eee")
+            .attr("stroke-width",1)
+            .attr("r",function(d){ return d; })
+            .style("fill",function(d,i){ if( i%2 ){ return "#fff"; }else { return "#fefefe"; }})
+            .style("opacity",0.4);
+            
+        },
+        buildRadarLine:function(){
+            //draw line
+            var self = this;
+            var radarR = this.radarR;
+            var svg = this.radarWrapper.select("svg");
+            this.radarLines = svg.selectAll(".radar-line")
+            .data(this.angleList)
+            .enter()
+            .append("line")
+            .attr("stroke","#ddd")
+            .attr("stroke-width",1)
+            .attr("x1",radarR)
+            .attr("y1",radarR)
+            .attr("x2",function(d,i){
+              return Math.floor(radarR+Math.sin(d) * radarR);
+            })
+            .attr("y2",function(d,i){
+              return Math.floor(radarR-Math.cos(d) * radarR);
+            });
+          
+        }
+
+     };
+      
+     var Builder =  new radarBuilder(radarItemList);
+      
+      
+    </script>
+  </body>
+</html>
