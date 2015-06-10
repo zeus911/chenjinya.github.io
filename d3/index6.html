@@ -38,10 +38,11 @@
       position: relative;
       padding:10px;
       
-      width:620px;
-      height:600px;
-
-      margin: 0 auto;
+      width:500px;
+      height:500px;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #fff;
+      margin: 56px;
       float: left;
 
     }
@@ -59,7 +60,7 @@
       position: relative;
       width:300px;
       height:300px;
-      margin:150px auto 100px
+      margin:100px auto 100px
       
     }
     .radar-item{
@@ -156,10 +157,7 @@
       cursor: pointer;
     }
    
-    .main-wrapper{
-      opacity: 1;
-    }
-
+  
 
     .header{
       background: url(./img/header.jpg) center 0 no-repeat #081226;
@@ -270,6 +268,7 @@
     <div class="container" >
       
       <div class="main">
+          <div  
           <div class="user-section">
               <div class="user-avatar-section">
                   <img  class="user-avatar-side" src="./img/avatar_side.png" />
@@ -299,13 +298,11 @@
           </div>
           <div class="radar-container">
 
-            <div id="main-wrapper" class="main-wrapper">
               <div id="radar-wrapper" class="radar-wrapper">
           <!--     <img class="radar-broken" src="./broken.png" />
            --></div>
 
               
-            </div>
          
           </div>
           <div id="radar-mask" class="radar-mask" ></div>
