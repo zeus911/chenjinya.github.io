@@ -25,6 +25,7 @@
       background: url(./habo.jpg) center no-repeat;
       margin:0;
       padding:0;
+      font-family:"Helvetica Neue",Helvetica,"Lucida Grande","Luxi Sans",Arial,"Hiragino Sans GB",STHeiti,"Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei Mono",LiGothicMed;
     }
     .container{
         /*width: 820px;
@@ -169,8 +170,9 @@
     .main{
       width:820px;
       margin:0 auto;
-      height:800px;
-      padding-top:180px;
+      padding-top:110px;
+
+      height:1040px;
     }
     .user-section{
       float: left;
@@ -256,56 +258,189 @@
       padding-left:10px;
       color:#FFF;
     }
+    .role-word{
+      color:#FFF;
+    }
+    .title{
+       display: block;
+      width:250px;
+      height:80px;
+      background: url(./img/title.png) no-repeat;
+      font-weight: bold;
+      font-size: 24px;
+     
+      line-height: 80px;
+      text-align: center;
+      color:#FFF;
+    }
+    .clearfix{
+        zoom: 1;
+    }
+    .clearfix:after {
+      content: ".";
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden;
+    }
+
+    .rank-section{
+      background: #cfd8e6;
+      padding:50px 10px;
+    }
+    .rank-main{
+      width:900px;
+      margin:0 auto;
+    }
+    .rank-item{
+      height: 60px;
+      width:700px;
+
+      border:#333 1px solid;
+      background: url(img/rank_item.jpg) no-repeat;
+/*      background: rgba(45,33,78,0.5);
+*/      list-style: none;
+      line-height: 60px;
+      padding:10px;
+      margin:5px auto;
+    }
+    .rank-item-avatar{
+      width:50px;
+      height:50px;
+      vertical-align: middle;
+      border-radius: 3px;
+      box-shadow: 0 0 4px #fff;
+    }
+    .rank-item-right{
+      float:right;
+      margin-right:10px;
+    }
+    .rank-item-name{
+      color:#FFF;
+      margin-left:20px;
+    }
+    .rank-item-prop{
+      color:#F00;
+      margin-left:20px;
+    }
+    .rank-item-value{
+      color:#fff;
+      margin-left:10px;
+    }
     </style>
 
   </head>
 
   <body>
     
-      <!-- <div class="header">
+      <div class="header">
 
-      </div> -->
+      </div>
     <div class="container" >
       
       <div class="main">
-          <div  
-          <div class="user-section">
-              <div class="user-avatar-section">
-                  <img  class="user-avatar-side" src="./img/avatar_side.png" />
-                  <img  class="user-avatar" src="./img/avatar.jpg" />
-                 
-                  <p class="user-name">金亚哈哈哈</p>
-                  <img  class="user-avatar-side2" src="./img/avatar_side2.png" />
-              </div>
-              <a class="pk-btn">PK</a>
-              <div class="user-property" >
-                <div class="user-property-item">
-                  <span class="user-property-key">统帅</span><span class="user-property-value">123</span>
+          <div class="title">角色信息</div>
+          <div class="clearfix" >
+            <div class="user-section">
+                <div class="user-avatar-section">
+                    <img  class="user-avatar-side" src="./img/avatar_side.png" />
+                    <img  class="user-avatar" src="./img/avatar.jpg" />
+                   
+                    <p class="user-name">金亚哈哈哈</p>
+                    <img  class="user-avatar-side2" src="./img/avatar_side2.png" />
                 </div>
-                <div class="user-property-item">
-                  <span class="user-property-key">武力</span><span class="user-property-value">123</span>
+                <a class="pk-btn">PK</a>
+                <div class="user-property" >
+                  <div class="user-property-item">
+                    <span class="user-property-key">统帅</span><span class="user-property-value">123</span>
+                  </div>
+                  <div class="user-property-item">
+                    <span class="user-property-key">武力</span><span class="user-property-value">123</span>
+                  </div>
+                  <div class="user-property-item">
+                    <span class="user-property-key">智力</span><span class="user-property-value">123</span>
+                  </div>
+                  <div class="user-property-item">
+                    <span class="user-property-key">暴击</span><span class="user-property-value">123</span>
+                  </div>
+                  <div class="user-property-item">
+                    <span class="user-property-key">耐力</span><span class="user-property-value">123</span>
+                  </div>
                 </div>
-                <div class="user-property-item">
-                  <span class="user-property-key">智力</span><span class="user-property-value">123</span>
-                </div>
-                <div class="user-property-item">
-                  <span class="user-property-key">暴击</span><span class="user-property-value">123</span>
-                </div>
-                <div class="user-property-item">
-                  <span class="user-property-key">耐力</span><span class="user-property-value">123</span>
-                </div>
-              </div>
-          </div>
-          <div class="radar-container">
+            </div>
+            <div class="radar-container">
 
-              <div id="radar-wrapper" class="radar-wrapper">
-          <!--     <img class="radar-broken" src="./broken.png" />
-           --></div>
+                <div id="radar-wrapper" class="radar-wrapper">
+            <!--     <img class="radar-broken" src="./broken.png" />
+             --></div>
+            </div>
+            <div id="radar-mask" class="radar-mask" ></div>
+            <div class="role-word">
+                 <p>朕是游戏野狼！有没有！--朕投入了*****分钟和其他人交流游戏，死忠度超过80%贴吧同好！ </p>
+                <p>朕是妇女之友！有没有！--朕在贴吧上与****同好交流过，其中女性朋友占**%! </p>
 
-              
-         
+                <p>在那个青葱的游戏年代里，朕遇到过很多糗事，很多！有没有！！！朕要吐槽点点点！</p>
+            </div>
           </div>
-          <div id="radar-mask" class="radar-mask" ></div>
+
+          
+      </div>
+      <div class="rank-section">
+        <div class="rank-main">
+          <div class="title">排行榜</div>
+            <div>
+                <ul class="rank-list">
+                    <li class="rank-item">
+                        <img class="rank-item-avatar" src="img/avatar.jpg">
+                        <a class="rank-item-name"  href="">金亚哈啊</a>
+                        <div class="rank-item-right">
+                          <span class="rank-item-prop" >统帅</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >武力</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >智力</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >暴击</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >耐力</span><span class="rank-item-value" >123</span>
+                        </div>
+                        
+                    </li>
+                     <li class="rank-item">
+                        <img class="rank-item-avatar" src="img/avatar.jpg">
+                        <a class="rank-item-name"  href="">金亚哈啊</a>
+                        <div class="rank-item-right">
+                          <span class="rank-item-prop" >统帅</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >武力</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >智力</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >暴击</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >耐力</span><span class="rank-item-value" >123</span>
+                        </div>
+                        
+                    </li>
+                    <li class="rank-item">
+                        <img class="rank-item-avatar" src="img/avatar.jpg">
+                        <a class="rank-item-name"  href="">金亚哈啊</a>
+                        <div class="rank-item-right">
+                          <span class="rank-item-prop" >统帅</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >武力</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >智力</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >暴击</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >耐力</span><span class="rank-item-value" >123</span>
+                        </div>
+                        
+                    </li>
+                    <li class="rank-item">
+                        <img class="rank-item-avatar" src="img/avatar.jpg">
+                        <a class="rank-item-name"  href="">金亚哈啊</a>
+                        <div class="rank-item-right">
+                          <span class="rank-item-prop" >统帅</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >武力</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >智力</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >暴击</span><span class="rank-item-value" >123</span>
+                          <span class="rank-item-prop" >耐力</span><span class="rank-item-value" >123</span>
+                        </div>
+                        
+                    </li>
+                </ul>
+            </div>
+        </div>
       </div>
       <svg style="height:0; ">
           <defs>
