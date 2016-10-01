@@ -155,12 +155,18 @@
 	0%{
 		box-shadow: 0 0 0 0 #ff194a;
 	}
-	90%{
+	80%{
 		box-shadow: 0 0 0 0 #ff194a;
 	}
-	100%{
+	90%{
 		box-shadow: 0 0 10em 100em #ff194a;
+		transform: rotateZ(0deg) scale(1);
 	}
+	100%{
+		transform: rotateZ(360deg) scale(0);
+
+	}
+
 }
 
 .loading-section{
@@ -188,7 +194,8 @@
 	margin-top: -2.5em;
 	font-weight: bold;
 	box-shadow: 0 0 10px #ff194a;
- 	
+ 	background: url("./static/img/loading-logo.png") no-repeat #ff194a;
+ 	background-size:100% 100%;
 
  	perspective: 100px;
  	animation:loading-center 6s linear forwards ;
@@ -229,10 +236,7 @@
 
 	<div class='loading-section' >
 		<div class='loading-center'>
-<!-- 			<p class="loading-center-small">BEIJING</p>
- -->			<p class="loading-center-big">G-F</p>
-<!-- 			<p class="loading-center-small">ALOHA&MODO</p>
- -->		</div>
+		</div>
 		<div class='loading-center-circle-inner'></div>
 		<div class='loading-center-circle-outer'></div>
 	</div>
