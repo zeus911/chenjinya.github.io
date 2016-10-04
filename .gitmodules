@@ -19,3 +19,15 @@
 [submodule "shengun"]
 	path = shengun
 	url = https://github.com/chenjinya/shengun.git
+[submodule "circle"]
+	path = circle
+	url = https://github.com/chenjinya/circle.git
+[submodule "Loser"]
+	path = Loser
+	url = https://github.com/chenjinya/Loser.git
+[submodule "cacabear"]
+	path = cacabear
+	url = https://github.com/chenjinya/cacabear.git
+[submodule "rocket"]
+	path = rocket
+	url = https://github.com/chenjinya/rocket.git
