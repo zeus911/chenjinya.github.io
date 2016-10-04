@@ -31,3 +31,6 @@
 [submodule "rocket"]
 	path = rocket
 	url = https://github.com/chenjinya/rocket.git
+[submodule "lottery-by-pic"]
+	path = lottery-by-pic
+	url = https://github.com/chenjinya/lottery-by-pic.git
