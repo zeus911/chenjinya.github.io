@@ -10,3 +10,12 @@
 [submodule "matrix"]
 	path = matrix
 	url = https://github.com/chenjinya/matrix.git
+[submodule "wumai"]
+	path = wumai
+	url = https://github.com/chenjinya/wumai.git
+[submodule "tocao"]
+	path = tocao
+	url = https://github.com/chenjinya/tocao.git
+[submodule "shengun"]
+	path = shengun
+	url = https://github.com/chenjinya/shengun.git
