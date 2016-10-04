@@ -1,3 +1,9 @@
 [submodule "lottery-by-name"]
 	path = lottery-by-name
 	url = https://github.com/chenjinya/lottery-by-name.git
+[submodule "television-color"]
+	path = television-color
+	url = https://github.com/chenjinya/television-color.git
+[submodule "baidukill"]
+	path = baidukill
+	url = https://github.com/chenjinya/baidukill
