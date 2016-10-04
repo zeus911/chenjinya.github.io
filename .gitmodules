@@ -1,0 +1,3 @@
+[submodule "lottery-by-name"]
+	path = lottery-by-name
+	url = https://github.com/chenjinya/lottery-by-name.git
