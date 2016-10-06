@@ -37,3 +37,6 @@
 [submodule "aloha"]
 	path = aloha
 	url = https://github.com/chenjinya/aloha.git
+[submodule "qihang-fe"]
+	path = qihang-fe
+	url = https://github.com/chenjinya/qihang-fe.git
