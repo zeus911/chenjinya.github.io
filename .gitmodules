@@ -40,3 +40,6 @@
 [submodule "qihang-fe"]
 	path = qihang-fe
 	url = https://github.com/chenjinya/qihang-fe.git
+[submodule "kill-fruit"]
+	path = kill-fruit
+	url = https://github.com/chenjinya/kill-fruit.git
