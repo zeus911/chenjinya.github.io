@@ -43,3 +43,6 @@
 [submodule "kill-fruit"]
 	path = kill-fruit
 	url = https://github.com/chenjinya/kill-fruit.git
+[submodule "intro"]
+	path = intro
+	url = https://github.com/chenjinya/intro.git
